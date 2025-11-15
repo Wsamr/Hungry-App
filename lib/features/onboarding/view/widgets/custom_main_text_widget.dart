@@ -9,12 +9,14 @@ class CustomMainTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      softWrap: true,
+      textAlign: TextAlign.center,
       style: TextStyle(
         color: AppColors.mainColor,
         fontWeight: FontWeight.bold,
         fontSize: ResponsiveTextSize.getResponsiveFontSize(
           context,
-          fontSize: 35,
+          fontSize: 32,
         ),
       ),
     );

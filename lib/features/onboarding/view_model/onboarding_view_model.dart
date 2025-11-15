@@ -6,6 +6,7 @@ class OnboardingViewModel extends ChangeNotifier {
   final OnboardingRepository onboardingRepository;
   List<OnboardingModel> onboardingList = [];
   int currentIndex = 0;
+  bool isLast = false;
   OnboardingViewModel(this.onboardingRepository) {
     loadData();
   }
@@ -15,8 +16,17 @@ class OnboardingViewModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  onPageChanged(int index) {
+  void setCurrentIndex(int index) {
     currentIndex = index;
+    lastPage(index);
+  }
+
+  lastPage(int index) {
+    if (index == onboardingList.length - 1) {
+      isLast = true;
+    } else {
+      isLast = false;
+    }
     notifyListeners();
   }
 }

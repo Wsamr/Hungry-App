@@ -8,6 +8,7 @@ class CustomSubTextWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       text,
+      textAlign: TextAlign.center,
       style: TextStyle(
         fontWeight: FontWeight.w500,
         fontSize: ResponsiveTextSize.getResponsiveFontSize(

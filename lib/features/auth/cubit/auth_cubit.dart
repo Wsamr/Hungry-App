@@ -1,0 +1,61 @@
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
+import 'package:restaurant_app_sonic/core/constants/cache_keys.dart';
+import 'package:restaurant_app_sonic/core/errors/exceptions.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/login_models/login_request_model.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/login_models/login_response_model.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/register_models/register_request_model.dart';
+import 'package:restaurant_app_sonic/features/auth/data/repo/auth_repo.dart';
+
+part 'auth_state.dart';
+
+class AuthCubit extends Cubit<AuthState> {
+  AuthCubit({required this.authRepo, required this.cacheHelper})
+    : super(AuthInitial());
+  AuthRepo authRepo;
+  CacheHelper cacheHelper;
+  XFile? image;
+  login(LoginRequestModel user) async {
+    try {
+      emit(LoginLoading());
+      LoginResponseModel response = await authRepo.login(user);
+      // store token
+      final String? token = response.data?.token;
+      if (token != null && token.isNotEmpty) {
+        await cacheHelper.saveData(CacheKeys.token, token);
+      }
+      emit(LoginSuccess(token: token!));
+    } on ServerException catch (e) {
+      emit(LoginFailure(errorMessage: e.errModel.errorMessage));
+    } catch (e) {
+      emit(LoginFailure(errorMessage: e.toString()));
+    }
+  }
+
+  uploadImage(XFile imagePic) {
+    image = imagePic;
+    emit(UpLoadingImage());
+  }
+
+  register(RegisterRequestModel user) async {
+    try {
+      emit(ResgisterLoading());
+      print("ussssssssssssssssssssssssssssssssssss");
+      final response = await authRepo.register(user);
+      print("ussssssssssssssssssssssssssssssssssss");
+      // store token
+      final String? token = response.data?.token;
+      if (token != null && token.isNotEmpty) {
+        await cacheHelper.saveData(CacheKeys.token, token);
+      }
+      emit(ResgisterSuccess(token: ""));
+    } on ServerException catch (e) {
+      print("noooooooooooooooooooooooooooooooo ${e.errModel.errorMessage}");
+      emit(ResgisterFailure(errorMessage: e.errModel.errorMessage));
+    } catch (e) {
+      print("noooooooooooooooooooooooooooooooo${e.toString()}");
+      emit(ResgisterFailure(errorMessage: e.toString()));
+    }
+  }
+}
