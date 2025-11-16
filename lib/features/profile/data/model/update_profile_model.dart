@@ -1,11 +1,13 @@
 import 'dart:convert';
+import 'package:image_picker/image_picker.dart';
+import 'package:restaurant_app_sonic/core/functions/upload_image.dart';
 
 class UpdateProfileModel {
   final String? name;
   final String? email;
   final String? address;
   final String? visa;
-  final String? image;
+  final XFile? image;
   UpdateProfileModel({
     this.name,
     this.email,
@@ -14,15 +16,16 @@ class UpdateProfileModel {
     this.image,
   });
 
-  Map<String, dynamic> toMap() {
-    return <String, dynamic>{
-      'name': name,
-      'email': email,
-      'address': address,
-      'visa': visa,
-      'image': image,
-    };
+  Future<Map<String, dynamic>> toMap() async {
+    final map = <String, dynamic>{};
+    if (name != null) map['name'] = name;
+    if (email != null) map['email'] = email;
+    if (address != null) map['address'] = address;
+    if (visa != null) map['visa'] = visa;
+    if (image != null) map['image'] = await uploadImageToAPI(image!);
+
+    return map;
   }
 
-  String toJson() => json.encode(toMap());
+  Future<String> toJson() async => json.encode(await toMap());
 }

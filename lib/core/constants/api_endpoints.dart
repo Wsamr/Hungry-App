@@ -4,10 +4,15 @@ abstract class ApiEndpoints {
   //auth endPoints
   static const String loginEndPoint = "/login";
   static const String registerEndPoint = "/register";
+
+  // profile
+  static const String getProfileEndPoint = "/profile";
+  static const String updateProfileEndPoint = "/update-profile";
 }
 
 abstract class ApiKeys {
   static const String accept = "Accept";
   static const String applicationJson = "application/json";
   static const String message = "message";
+  static const String authorization = "Authorization";
 }
