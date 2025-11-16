@@ -3,7 +3,7 @@ import 'package:restaurant_app_sonic/features/profile/data/model/profile_data_mo
 class ProfileResponseModel {
   final int code;
   final String message;
-  final ProfileDataModel profileDataModel;
+  final ProfileDataModel? profileDataModel;
   ProfileResponseModel({
     required this.code,
     required this.message,
@@ -14,9 +14,9 @@ class ProfileResponseModel {
     return ProfileResponseModel(
       code: map['code'] as int,
       message: map['message'] as String,
-      profileDataModel: ProfileDataModel.fromMap(
-        map['data'] as Map<String, dynamic>,
-      ),
+      profileDataModel: map['data'] != null
+          ? ProfileDataModel.fromMap(map['data'] as Map<String, dynamic>)
+          : null,
     );
   }
 }

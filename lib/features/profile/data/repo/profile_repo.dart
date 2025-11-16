@@ -7,6 +7,7 @@ import 'package:restaurant_app_sonic/features/profile/data/model/update_profile_
 abstract class ProfileRepo {
   Future<ProfileResponseModel> getProfileInfo();
   Future<ProfileResponseModel> updateProfileInfo(UpdateProfileModel? user);
+  Future<ProfileResponseModel> logout();
 }
 
 class ProfileRepoImp extends ProfileRepo {
@@ -35,6 +36,18 @@ class ProfileRepoImp extends ProfileRepo {
         isFormData: true,
         data: data,
       );
+      return ProfileResponseModel.fromMap(response);
+    } on ServerException catch (e) {
+      rethrow;
+    } on Exception catch (e) {
+      throw Exception(e.toString());
+    }
+  }
+
+  @override
+  Future<ProfileResponseModel> logout() async {
+    try {
+      final response = await apiConsumer.post(ApiEndpoints.logoutEndPoint);
       return ProfileResponseModel.fromMap(response);
     } on ServerException catch (e) {
       rethrow;

@@ -8,6 +8,7 @@ abstract class ApiEndpoints {
   // profile
   static const String getProfileEndPoint = "/profile";
   static const String updateProfileEndPoint = "/update-profile";
+  static const String logoutEndPoint = "/logout";
 }
 
 abstract class ApiKeys {
