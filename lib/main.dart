@@ -30,7 +30,7 @@ class ReataurnantApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       // home: HomeView(),
       theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      initialRoute: RouteNames.resgisterView,
+      initialRoute: RouteNames.bottomNavWidget,
       onGenerateRoute: AppRoutes.generateRoute,
     );
   }

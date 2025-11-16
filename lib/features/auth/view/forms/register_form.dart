@@ -5,11 +5,10 @@ import 'package:image_picker/image_picker.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/constants/route_names.dart';
-import 'package:restaurant_app_sonic/core/functions/convert_image_to_xfile_or_file.dart';
+import 'package:restaurant_app_sonic/core/functions/picker_image.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_buttom_sheet.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_text_form_feild_widget.dart';
-import 'package:restaurant_app_sonic/core/widgets/icon_and_text_bottom_row.dart';
 import 'package:restaurant_app_sonic/features/auth/view/widgets/custom_auth_rich_text_widget.dart';
 import 'package:restaurant_app_sonic/features/auth/cubit/auth_cubit.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/register_models/register_request_model.dart';
@@ -25,6 +24,13 @@ class RegisterForm extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController phoneController = TextEditingController();
     ValueNotifier isHidenPassword = ValueNotifier(true);
+    Future<void> _handlePick(BuildContext context, ImageSource source) async {
+      XFile? image = await pickImage(source);
+      if (image != null) {
+        await context.read<AuthCubit>().uploadImage(image);
+      }
+      Navigator.pop(context);
+    }
 
     return BlocConsumer<AuthCubit, AuthState>(
       listener: (context, state) {
@@ -60,10 +66,15 @@ class RegisterForm extends StatelessWidget {
                     right: 2,
                     bottom: 4,
                     child: GestureDetector(
-                      onTap: () {
-                        Scaffold.of(
-                          context,
-                        ).showBottomSheet((context) => CustomBottomSheet());
+                      onTap: () async {
+                        Scaffold.of(context).showBottomSheet(
+                          (context) => CustomBottomSheet(
+                            cameraOnTap: () =>
+                                _handlePick(context, ImageSource.camera),
+                            galaryOnTap: () =>
+                                _handlePick(context, ImageSource.gallery),
+                          ),
+                        );
                       },
                       child: CircleAvatar(
                         backgroundColor: AppColors.mainColor,

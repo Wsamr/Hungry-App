@@ -8,11 +8,13 @@ class CustomImageBox extends StatelessWidget {
     required this.screenHeight,
     required this.screenWidth,
     this.image,
+    this.onTap,
   });
 
   final double screenHeight;
   final double screenWidth;
   final String? image;
+  final void Function()? onTap;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +32,22 @@ class CustomImageBox extends StatelessWidget {
             ),
           ),
         ),
-        Container(color: Colors.red, height: 10, width: 100),
+        Positioned(
+          bottom: 0,
+          right: 0,
+          child: GestureDetector(
+            onTap: onTap,
+            child: Container(
+              height: screenHeight * .05,
+              width: screenWidth * .1,
+              decoration: BoxDecoration(
+                color: AppColors.mainColor,
+                shape: BoxShape.rectangle,
+              ),
+              child: Icon(Icons.add, color: Colors.white),
+            ),
+          ),
+        ),
       ],
     );
   }

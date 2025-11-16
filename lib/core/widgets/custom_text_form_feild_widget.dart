@@ -11,6 +11,11 @@ class CustomTextFormFelidWidget extends StatelessWidget {
     this.obscureText = false,
     this.onChanged,
     this.suffixIcon,
+    this.focusNode,
+    this.onEditingComplete,
+    this.onFieldSubmitted,
+    this.textInputAction,
+    this.keyboardType,
   });
   TextEditingController? controller;
   String? Function(String?)? validator;
@@ -19,14 +24,23 @@ class CustomTextFormFelidWidget extends StatelessWidget {
   void Function(String)? onChanged;
   bool obscureText;
   Widget? suffixIcon;
-
+  FocusNode? focusNode;
+  void Function(String)? onFieldSubmitted;
+  void Function()? onEditingComplete;
+  TextInputAction? textInputAction;
+  TextInputType? keyboardType;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      focusNode: focusNode,
+      keyboardType: keyboardType,
       controller: controller,
       validator: validator,
+      onFieldSubmitted: onChanged,
+      onEditingComplete: onEditingComplete,
       obscureText: obscureText,
       onChanged: onChanged,
+      textInputAction: textInputAction,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
