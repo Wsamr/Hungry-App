@@ -16,6 +16,7 @@ class UpdateProfileModel {
     this.image,
   });
 
+  //!don`t send all but make map only have attribute that you send it
   Future<Map<String, dynamic>> toMap() async {
     final map = <String, dynamic>{};
     if (name != null) map['name'] = name;
