@@ -16,6 +16,8 @@ class CustomTextFormFelidWidget extends StatelessWidget {
     this.onFieldSubmitted,
     this.textInputAction,
     this.keyboardType,
+    this.widthBorder,
+    this.fillColor,
   });
   TextEditingController? controller;
   String? Function(String?)? validator;
@@ -29,6 +31,8 @@ class CustomTextFormFelidWidget extends StatelessWidget {
   void Function()? onEditingComplete;
   TextInputAction? textInputAction;
   TextInputType? keyboardType;
+  double? widthBorder;
+  Color? fillColor;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
@@ -40,13 +44,20 @@ class CustomTextFormFelidWidget extends StatelessWidget {
       onEditingComplete: onEditingComplete,
       obscureText: obscureText,
       onChanged: onChanged,
+
       textInputAction: textInputAction,
       decoration: InputDecoration(
         prefixIcon: prefixIcon,
         suffixIcon: suffixIcon,
+        fillColor: fillColor,
+        filled: (fillColor != null) ? true : false,
+
         enabledBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),
-          borderSide: BorderSide(color: AppColors.mainColor, width: 1),
+          borderSide: BorderSide(
+            color: AppColors.mainColor,
+            width: widthBorder ?? 1,
+          ),
         ),
         focusedBorder: OutlineInputBorder(
           borderRadius: BorderRadius.circular(13),

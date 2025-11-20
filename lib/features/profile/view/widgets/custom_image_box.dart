@@ -1,20 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 
 class CustomImageBox extends StatelessWidget {
   const CustomImageBox({
-    super.key,
+    Key? key,
     required this.screenHeight,
     required this.screenWidth,
-    this.image,
+    required this.image,
     this.onTap,
-  });
+  }) : super(key: key);
 
   final double screenHeight;
   final double screenWidth;
-  final String? image;
+
   final void Function()? onTap;
+  final ImageProvider<Object> image;
 
   @override
   Widget build(BuildContext context) {
@@ -26,10 +29,7 @@ class CustomImageBox extends StatelessWidget {
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.mainColor, width: 8),
             borderRadius: BorderRadius.circular(10),
-            image: DecorationImage(
-              image: AssetImage(image ?? AppImages.onboardingImg1),
-              fit: BoxFit.cover,
-            ),
+            image: DecorationImage(image: image, fit: BoxFit.cover),
           ),
         ),
         Positioned(

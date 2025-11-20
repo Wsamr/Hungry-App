@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:restaurant_app_sonic/core/api/api_consumer.dart';
 import 'package:restaurant_app_sonic/core/constants/api_endpoints.dart';
 import 'package:restaurant_app_sonic/core/errors/exceptions.dart';
+import 'package:restaurant_app_sonic/core/functions/upload_image.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/login_models/login_request_model.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/login_models/login_response_model.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/register_models/register_request_model.dart';
@@ -39,7 +40,7 @@ class AuthRepoImple extends AuthRepo {
         data: await user.toJson(),
       );
       return RegisterResponseModel.fromJson(response);
-    } on DioException catch (dioError) {
+    } on ServerException catch (dioError) {
       rethrow;
     } catch (e) {
       throw Exception('Unexpected error: $e');

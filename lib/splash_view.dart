@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
-import 'package:restaurant_app_sonic/features/onboarding/view/onboarding_view.dart';
+import 'package:restaurant_app_sonic/core/constants/cache_keys.dart';
+import 'package:restaurant_app_sonic/core/constants/route_names.dart';
+import 'package:restaurant_app_sonic/core/service/service_locator.dart';
 import 'package:svg_flutter/svg.dart';
 
 class SplashView extends StatefulWidget {
@@ -15,12 +18,37 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration(seconds: 3)).then((value) {
-      Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => OnboardingView()),
-        (route) => false,
-      );
+    checkVisitedAndAuth();
+  }
+
+  Future<bool> isVisitedFun() async {
+    bool? isVisited = await sl<CacheHelper>().containKey(CacheKeys.isVisited);
+    return isVisited;
+  }
+
+  void delayedNavigation(context, String path) {
+    Future.delayed(Duration(seconds: 3), () {
+      Navigator.pushNamedAndRemoveUntil(context, path, (route) => false);
     });
+  }
+
+  Future<bool> isAuthorizedFun() async {
+    bool? isAuthorized = await sl<CacheHelper>().containKey(CacheKeys.token);
+    return isAuthorized;
+  }
+
+  checkVisitedAndAuth() async {
+    bool isAuthorized = await isAuthorizedFun();
+    bool isVisited = await isVisitedFun();
+    if (isVisited) {
+      if (isAuthorized) {
+        delayedNavigation(context, RouteNames.bottomNavWidget);
+      } else {
+        delayedNavigation(context, RouteNames.loginView);
+      }
+    } else {
+      delayedNavigation(context, RouteNames.onboardingView);
+    }
   }
 
   @override

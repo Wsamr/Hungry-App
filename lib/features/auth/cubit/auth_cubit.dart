@@ -49,7 +49,7 @@ class AuthCubit extends Cubit<AuthState> {
       if (token != null && token.isNotEmpty) {
         await cacheHelper.saveData(CacheKeys.token, token);
       }
-      emit(ResgisterSuccess(token: ""));
+      emit(ResgisterSuccess(token: token!));
     } on ServerException catch (e) {
       print("noooooooooooooooooooooooooooooooo ${e.errModel.errorMessage}");
       emit(ResgisterFailure(errorMessage: e.errModel.errorMessage));

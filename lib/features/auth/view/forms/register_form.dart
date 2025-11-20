@@ -5,7 +5,9 @@ import 'package:image_picker/image_picker.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/constants/route_names.dart';
+import 'package:restaurant_app_sonic/core/functions/convert_image_to_xfile_or_file.dart';
 import 'package:restaurant_app_sonic/core/functions/picker_image.dart';
+import 'package:restaurant_app_sonic/core/utils/validatior.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_buttom_sheet.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_text_form_feild_widget.dart';
@@ -24,6 +26,7 @@ class RegisterForm extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController phoneController = TextEditingController();
     ValueNotifier isHidenPassword = ValueNotifier(true);
+    final keyForm = GlobalKey<FormState>();
     Future<void> _handlePick(BuildContext context, ImageSource source) async {
       XFile? image = await pickImage(source);
       if (image != null) {
@@ -45,17 +48,18 @@ class RegisterForm extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
         }
         if (state is ResgisterSuccess) {
-          Navigator.pushNamed(context, RouteNames.homeView);
+          Navigator.pushNamed(context, RouteNames.bottomNavWidget);
         }
       },
       builder: (context, state) {
         return Form(
+          key: keyForm,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Stack(
                 children: [
-                  state is UpLoadingImage
+                  context.read<AuthCubit>().image != null
                       ? CustomCircleImage(
                           size: size,
                           isFile: true,
@@ -89,12 +93,16 @@ class RegisterForm extends StatelessWidget {
                 hintText: "User Name ...",
                 controller: userNameController,
                 prefixIcon: Icon(Icons.person_2_outlined),
+                validator: Validatior.userNameValidation,
+                textInputAction: TextInputAction.next,
               ),
               SizedBox(height: size.height * .03),
               CustomTextFormFelidWidget(
                 hintText: "Email ...",
                 controller: emailController,
                 prefixIcon: Icon(Icons.email_outlined),
+                validator: Validatior.emailValidation,
+                textInputAction: TextInputAction.next,
               ),
               SizedBox(height: size.height * .03),
               ValueListenableBuilder(
@@ -103,7 +111,10 @@ class RegisterForm extends StatelessWidget {
                   return CustomTextFormFelidWidget(
                     hintText: "Password ...",
                     controller: passwordController,
+                    validator: Validatior.passwordValidation,
                     obscureText: value,
+                    textInputAction: TextInputAction.next,
+
                     prefixIcon: GestureDetector(
                       onTap: () {
                         isHidenPassword.value = !isHidenPassword.value;
@@ -120,19 +131,23 @@ class RegisterForm extends StatelessWidget {
                 hintText: "Phone ...",
                 controller: phoneController,
                 prefixIcon: Icon(Icons.phone_outlined),
+                validator: Validatior.phoneValidation,
+                textInputAction: TextInputAction.done,
               ),
               SizedBox(height: size.height * .03),
               CustomButtonWidget(
                 onPressed: () async {
-                  await context.read<AuthCubit>().register(
-                    RegisterRequestModel(
-                      name: userNameController.text,
-                      email: emailController.text,
-                      phone: phoneController.text,
-                      password: passwordController.text,
-                      image: context.read<AuthCubit>().image ?? null,
-                    ),
-                  );
+                  if (keyForm.currentState!.validate()) {
+                    await context.read<AuthCubit>().register(
+                      RegisterRequestModel(
+                        name: userNameController.text,
+                        email: emailController.text,
+                        phone: phoneController.text,
+                        password: passwordController.text,
+                        image: context.read<AuthCubit>().image ?? null,
+                      ),
+                    );
+                  }
                 },
                 title: "Register",
                 size: Size(size.width, size.height * .06),
@@ -140,7 +155,7 @@ class RegisterForm extends StatelessWidget {
               SizedBox(height: size.height * .03),
               CustomAuthRichTextWidget(
                 onTap: () {
-                  // Navigator.pushNamed(context, RouteNames.resgisterView);
+                  Navigator.pop(context);
                 },
                 hyperText: "SIGN In",
                 mainText: "Have Already Account ? ",
@@ -174,7 +189,7 @@ class CustomCircleImage extends StatelessWidget {
         radius: size.width * .14,
         backgroundImage: isFile == true
             ? FileImage(File(filePath!))
-            : AssetImage(AppImages.buragerImg),
+            : AssetImage(AppImages.personImage),
       ),
     );
   }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app_sonic/core/constants/route_names.dart';
+import 'package:restaurant_app_sonic/core/utils/validatior.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_text_form_feild_widget.dart';
 import 'package:restaurant_app_sonic/features/auth/view/widgets/custom_auth_rich_text_widget.dart';
@@ -17,6 +18,7 @@ class LoginForm extends StatelessWidget {
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
     ValueNotifier isHidenPassword = ValueNotifier(true);
+    final keyForm = GlobalKey<FormState>();
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
@@ -30,10 +32,11 @@ class LoginForm extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
         }
         if (state is LoginSuccess) {
-          Navigator.pushNamed(context, RouteNames.homeView);
+          Navigator.pushNamed(context, RouteNames.bottomNavWidget);
         }
       },
       child: Form(
+        key: keyForm,
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -43,6 +46,7 @@ class LoginForm extends StatelessWidget {
               hintText: "Email ...",
               controller: emailController,
               prefixIcon: Icon(Icons.person_2_outlined),
+              validator: Validatior.emailValidation,
             ),
             SizedBox(height: size.height * .04),
             ValueListenableBuilder(
@@ -52,6 +56,7 @@ class LoginForm extends StatelessWidget {
                   hintText: "Password ...",
                   controller: passwordController,
                   obscureText: value,
+                  validator: Validatior.passwordValidation,
                   prefixIcon: GestureDetector(
                     onTap: () {
                       isHidenPassword.value = !isHidenPassword.value;
@@ -66,12 +71,14 @@ class LoginForm extends StatelessWidget {
             SizedBox(height: size.height * .07),
             CustomButtonWidget(
               onPressed: () async {
-                await context.read<AuthCubit>().login(
-                  LoginRequestModel(
-                    email: emailController.text,
-                    password: passwordController.text,
-                  ),
-                );
+                if (keyForm.currentState!.validate()) {
+                  await context.read<AuthCubit>().login(
+                    LoginRequestModel(
+                      email: emailController.text,
+                      password: passwordController.text,
+                    ),
+                  );
+                }
               },
               title: "Login",
               size: Size(size.width, size.height * .07),

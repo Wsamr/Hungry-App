@@ -4,11 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 
-Future<String> convertImageToXFileOrFile(
-  String imageName, {
-  bool isfile = false,
-  bool isXfile = false,
-}) async {
+Future<XFile> convertImageToXFileOrFile(String imageName) async {
   var bytes = await rootBundle.load(imageName);
   String tempPath = (await getTemporaryDirectory()).path;
   final fileName = imageName.split('/').last;
@@ -16,5 +12,5 @@ Future<String> convertImageToXFileOrFile(
   await file.writeAsBytes(
     bytes.buffer.asUint8List(bytes.offsetInBytes, bytes.lengthInBytes),
   );
-  return XFile(file.path).path;
+  return XFile(file.path);
 }

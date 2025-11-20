@@ -14,8 +14,8 @@ class ApiInterceptors extends Interceptor {
     options.headers[ApiKeys.accept] = ApiKeys.applicationJson;
 
     // get tokens
-    // String? token = await sl<CacheHelper>().getData(CacheKeys.token);
-    String? token = "872|jIGpZdmp3Ll3gbGk8VYCKzUKDGBKmDpT9kqOPZbxbe15c0aa";
+    String? token = await sl<CacheHelper>().getData(CacheKeys.token);
+    // String? token = "973|7nKBNaESpMfMuuka6u0BwH97gz4hvRNiZ4g6knOf364aabb2";
     if (token != null) {
       options.headers[ApiKeys.authorization] =
           "Bearer $token"; // send token with request

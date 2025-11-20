@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
+import 'package:restaurant_app_sonic/core/constants/cache_keys.dart';
 import 'package:restaurant_app_sonic/core/constants/route_names.dart';
 import 'package:restaurant_app_sonic/core/service/service_locator.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
@@ -85,7 +87,11 @@ class _OnboardingBodyState extends State<OnboardingBody> {
                       padding: EdgeInsets.only(bottom: size.height * .1),
                       child: CustomButtonWidget(
                         title: "GetStarted",
-                        onPressed: () {
+                        onPressed: () async {
+                          await sl<CacheHelper>().saveData(
+                            CacheKeys.isVisited,
+                            true,
+                          );
                           Navigator.pushReplacementNamed(
                             context,
                             RouteNames.loginView,
