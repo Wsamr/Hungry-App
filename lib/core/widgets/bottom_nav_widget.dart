@@ -8,25 +8,17 @@ import 'package:restaurant_app_sonic/features/profile/view/profile_view.dart';
 
 class BottomNavWidget extends StatelessWidget {
   BottomNavWidget({super.key});
-  final List<Widget> screens = [
+  final List<Widget> screens = const [
     HomeView(),
-    Scaffold(
-      body: Container(
-        padding: EdgeInsets.all(16),
-        width: 50,
-        decoration: BoxDecoration(color: Colors.grey.shade400),
-        child: Text("All"),
-      ),
-    ),
     Scaffold(),
-    const ProfileView(),
+    Scaffold(),
+    ProfileView(),
   ];
   int index = 0;
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
       length: screens.length,
-
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
@@ -34,7 +26,6 @@ class BottomNavWidget extends StatelessWidget {
             child: const ProfileView(),
           ),
         ],
-
         child: Scaffold(
           bottomNavigationBar: CustomTabBar(),
           body: TabBarView(children: screens),

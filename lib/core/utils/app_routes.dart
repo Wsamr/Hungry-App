@@ -9,6 +9,7 @@ import 'package:restaurant_app_sonic/features/auth/cubit/auth_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
 import 'package:restaurant_app_sonic/features/onboarding/view/onboarding_view.dart';
+import 'package:restaurant_app_sonic/features/product/views/product_details_view.dart';
 import 'package:restaurant_app_sonic/features/profile/cubit/profile_cubit.dart';
 import 'package:restaurant_app_sonic/features/profile/view/profile_view.dart';
 import 'package:restaurant_app_sonic/splash_view.dart';
@@ -21,6 +22,9 @@ class AppRoutes {
 
       case RouteNames.onboardingView:
         return MaterialPageRoute(builder: (context) => OnboardingView());
+      case RouteNames.productDetailsView:
+        return MaterialPageRoute(builder: (context) => ProductDetailsView());
+
       case RouteNames.loginView:
         return MaterialPageRoute(
           builder: (context) => BlocProvider<AuthCubit>(

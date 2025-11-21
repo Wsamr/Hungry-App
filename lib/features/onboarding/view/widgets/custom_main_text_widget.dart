@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
-import 'package:restaurant_app_sonic/core/utils/responsive_text_size.dart';
+import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 
 class CustomMainTextWidget extends StatelessWidget {
   const CustomMainTextWidget({super.key, required this.text});
@@ -14,10 +14,7 @@ class CustomMainTextWidget extends StatelessWidget {
       style: TextStyle(
         color: AppColors.mainColor,
         fontWeight: FontWeight.bold,
-        fontSize: ResponsiveTextSize.getResponsiveFontSize(
-          context,
-          fontSize: 32,
-        ),
+        fontSize: ResTextSize.getResFontSize(context, fontSize: 32),
       ),
     );
   }

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
-import 'package:restaurant_app_sonic/core/utils/responsive_text_size.dart';
+import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 
 class CustomAuthRichTextWidget extends StatelessWidget {
   const CustomAuthRichTextWidget({
@@ -28,20 +28,14 @@ class CustomAuthRichTextWidget extends StatelessWidget {
                   text: hyperText,
                   style: TextStyle(
                     fontWeight: FontWeight.w700,
-                    fontSize: ResponsiveTextSize.getResponsiveFontSize(
-                      context,
-                      fontSize: 18,
-                    ),
+                    fontSize: ResTextSize.getResFontSize(context, fontSize: 18),
                     color: AppColors.mainColor,
                   ),
                 ),
               ],
               style: TextStyle(
                 color: Color(0xff6E6A7C),
-                fontSize: ResponsiveTextSize.getResponsiveFontSize(
-                  context,
-                  fontSize: 16,
-                ),
+                fontSize: ResTextSize.getResFontSize(context, fontSize: 16),
                 fontWeight: FontWeight.w600,
               ),
             ),

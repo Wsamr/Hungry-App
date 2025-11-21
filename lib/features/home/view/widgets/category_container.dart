@@ -1,18 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
+import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
+import 'package:restaurant_app_sonic/core/utils/screen.dart';
 
 class CategoryContainer extends StatelessWidget {
   const CategoryContainer({
     super.key,
-    required this.widthScreen,
-    required this.heightScreen,
+
     required this.category,
     this.onTap,
     this.isSelected = false,
   });
 
-  final double widthScreen;
-  final double heightScreen;
   final String category;
   final void Function()? onTap;
   final bool isSelected;
@@ -24,10 +23,10 @@ class CategoryContainer extends StatelessWidget {
       child: Container(
         alignment: Alignment.center,
         padding: EdgeInsets.symmetric(
-          horizontal: widthScreen * .04,
-          vertical: heightScreen * .008,
+          horizontal: Screen.w * .04,
+          vertical: Screen.h * .008,
         ),
-        margin: EdgeInsets.only(right: widthScreen * .02),
+        margin: EdgeInsets.only(right: Screen.w * .02),
         decoration: BoxDecoration(
           color: isSelected ? AppColors.mainColor : Colors.grey.shade200,
           borderRadius: BorderRadius.circular(15),
@@ -37,6 +36,7 @@ class CategoryContainer extends StatelessWidget {
           style: TextStyle(
             color: isSelected ? Colors.white : Colors.black,
             fontWeight: FontWeight.w500,
+            fontSize: ResTextSize.getResFontSize(context, fontSize: 18),
           ),
         ),
       ),

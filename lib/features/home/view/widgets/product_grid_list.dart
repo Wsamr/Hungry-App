@@ -1,34 +1,35 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_sonic/features/home/data/repo/fake_products_repo.dart';
+import 'package:restaurant_app_sonic/core/constants/route_names.dart';
+import 'package:restaurant_app_sonic/core/utils/screen.dart';
+import 'package:restaurant_app_sonic/features/home/data/repo/fake_repo.dart';
 import 'package:restaurant_app_sonic/features/home/view/widgets/product_card_widget.dart';
 
 class ProductsGridList extends StatelessWidget {
-  const ProductsGridList({
-    super.key,
-    required this.widthScreen,
-    required this.heightScreen,
-  });
-
-  final double widthScreen;
-  final double heightScreen;
-
+  const ProductsGridList({super.key});
   @override
   Widget build(BuildContext context) {
-    return SliverGrid.builder(
-      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        childAspectRatio: .7,
-        crossAxisSpacing: widthScreen * .03,
-        mainAxisSpacing: heightScreen * .02,
+    return SliverPadding(
+      padding: EdgeInsetsGeometry.symmetric(
+        horizontal: Screen.w * .03,
+        vertical: Screen.h * .02,
       ),
-      itemCount: products.length,
-      itemBuilder: (context, index) {
-        return ProductCardWidget(
-          productModel: products[index],
-          widthScreen: widthScreen,
-          heightScreen: heightScreen,
-        );
-      },
+      sliver: SliverGrid.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          childAspectRatio: .7,
+          crossAxisSpacing: Screen.w * .03,
+          mainAxisSpacing: Screen.h * .02,
+        ),
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          return ProductCardWidget(
+            productModel: products[index],
+            onTap: () {
+              Navigator.pushNamed(context, RouteNames.productDetailsView);
+            },
+          );
+        },
+      ),
     );
   }
 }

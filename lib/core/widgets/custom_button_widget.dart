@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
-import 'package:restaurant_app_sonic/core/utils/responsive_text_size.dart';
+import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 
 class CustomButtonWidget extends StatelessWidget {
   const CustomButtonWidget({
@@ -29,10 +29,7 @@ class CustomButtonWidget extends StatelessWidget {
           title,
           style: TextStyle(
             color: Colors.white,
-            fontSize: ResponsiveTextSize.getResponsiveFontSize(
-              context,
-              fontSize: 24,
-            ),
+            fontSize: ResTextSize.getResFontSize(context, fontSize: 24),
           ),
         ),
       ),
