@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/features/home/data/models/product_model.dart';
@@ -53,6 +54,8 @@ class ProductCardWidget extends StatelessWidget {
                       ),
                     ),
                   ),
+                  Spacer(),
+                  Icon(Icons.favorite, color: AppColors.mainColor),
                 ],
               ),
             ],
