@@ -4,9 +4,10 @@ import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_container.dart';
 
-class AddToCartContainer extends StatelessWidget {
-  const AddToCartContainer({super.key});
-
+class BottomSlaryContainer extends StatelessWidget {
+  const BottomSlaryContainer({super.key, this.buttonName, this.onTap});
+  final String? buttonName;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -52,7 +53,10 @@ class AddToCartContainer extends StatelessWidget {
                 ),
               ],
             ),
-            CustomButtonContainer(title: "Add To Cart"),
+            CustomButtonContainer(
+              title: buttonName ?? "Add To Cart",
+              onTap: onTap,
+            ),
           ],
         ),
       ),

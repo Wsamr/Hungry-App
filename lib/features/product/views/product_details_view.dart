@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
-import 'package:restaurant_app_sonic/features/product/views/widgets/add_to_cart_container.dart';
+import 'package:restaurant_app_sonic/core/widgets/bottom_salary_container.dart';
 import 'package:restaurant_app_sonic/features/product/views/widgets/product_details_top_section.dart';
 import 'package:restaurant_app_sonic/features/product/views/widgets/product_options_section.dart';
 
@@ -29,9 +29,8 @@ class ProductDetailsView extends StatelessWidget {
           ],
         ),
       ),
-      floatingActionButtonLocation:
-          FloatingActionButtonLocation.miniCenterDocked,
-      floatingActionButton: AddToCartContainer(),
+
+      bottomSheet: BottomSlaryContainer(),
     );
   }
 }
