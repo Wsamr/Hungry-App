@@ -5,8 +5,17 @@ import 'package:restaurant_app_sonic/features/cart/views/widgets/cart_item_detai
 import 'package:restaurant_app_sonic/features/cart/views/widgets/cart_item_quanity_section.dart';
 
 class CartItemWidget extends StatelessWidget {
-  const CartItemWidget({super.key});
-
+  const CartItemWidget({
+    super.key,
+    this.minusOnTap,
+    this.addOnTap,
+    this.removeOnTap,
+    this.value,
+  });
+  final void Function()? minusOnTap;
+  final void Function()? addOnTap;
+  final void Function()? removeOnTap;
+  final int? value;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,7 +33,14 @@ class CartItemWidget extends StatelessWidget {
               des: "Veggie Burger",
             ),
             SizedBox(width: Screen.h * .04),
-            Expanded(child: CartItemQuantitySection(removeOnTap: () {})),
+            Expanded(
+              child: CartItemQuantitySection(
+                removeOnTap: removeOnTap,
+                addOnTap: addOnTap,
+                minusOnTap: minusOnTap,
+                value: value,
+              ),
+            ),
           ],
         ),
       ),

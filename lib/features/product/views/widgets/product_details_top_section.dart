@@ -4,8 +4,9 @@ import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/features/product/views/widgets/slider_spicy_custom.dart';
 
 class SpicyTopSection extends StatelessWidget {
-  const SpicyTopSection({super.key, required this.image});
+  SpicyTopSection({super.key, required this.image});
   final String image;
+  final ValueNotifier<double> spicyNotifier = ValueNotifier(0.5);
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -31,7 +32,15 @@ class SpicyTopSection extends StatelessWidget {
                       ),
                     ),
                   ),
-                  SliderSpicyCustom(value: .5, onChanged: (value) {}),
+                  ValueListenableBuilder(
+                    valueListenable: spicyNotifier,
+                    builder: (context, value, child) => SliderSpicyCustom(
+                      value: spicyNotifier.value,
+                      onChanged: (value) {
+                        spicyNotifier.value = value;
+                      },
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [Text("🥶"), Text("🌶️")],

@@ -25,7 +25,8 @@ class BottomNavWidget extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => sl<ProfileCubit>()..getProfileInfo(),
+            // create: (context) => sl<ProfileCubit>()..getProfileInfo(),
+            create: (context) => sl<ProfileCubit>(),
             child: const ProfileView(),
           ),
         ],

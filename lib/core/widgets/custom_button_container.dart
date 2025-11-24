@@ -13,8 +13,8 @@ class CustomButtonContainer extends StatelessWidget {
       onTap: onTap,
       child: Container(
         padding: EdgeInsets.symmetric(
-          horizontal: Screen.w * .13,
-          vertical: Screen.h * .03,
+          horizontal: Screen.w * .1,
+          vertical: Screen.h * .02,
         ),
         decoration: BoxDecoration(
           color: AppColors.mainColor,

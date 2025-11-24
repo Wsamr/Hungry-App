@@ -13,7 +13,7 @@ class ProductOptionItemWidget extends StatelessWidget {
       children: [
         Container(
           height: Screen.h * .15,
-          width: Screen.w * .34,
+          width: Screen.w * .3,
           decoration: BoxDecoration(
             color: Color(0xff3C2F2F),
             borderRadius: BorderRadius.circular(40),
@@ -53,7 +53,7 @@ class ProductOptionItemWidget extends StatelessWidget {
                   "Tomato",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: ResTextSize.getResFontSize(context, fontSize: 18),
+                    fontSize: ResTextSize.getResFontSize(context, fontSize: 14),
                   ),
                 ),
                 GestureDetector(
