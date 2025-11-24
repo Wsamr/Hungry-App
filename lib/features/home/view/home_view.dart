@@ -18,6 +18,7 @@ class HomeView extends StatelessWidget {
         body: SafeArea(
           child: CustomScrollView(
             slivers: [
+              SliverToBoxAdapter(child: SizedBox(height: Screen.h * .03)),
               CustomSliverAppBar(user: user),
               SliverToBoxAdapter(child: SizedBox(height: Screen.h * .01)),
               SliverToBoxAdapter(child: CustomSearchTextField()),

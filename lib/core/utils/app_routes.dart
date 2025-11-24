@@ -6,6 +6,7 @@ import 'package:restaurant_app_sonic/core/widgets/bottom_nav_widget.dart';
 import 'package:restaurant_app_sonic/features/auth/view/login_view.dart';
 import 'package:restaurant_app_sonic/features/auth/view/register_view.dart';
 import 'package:restaurant_app_sonic/features/auth/cubit/auth_cubit.dart';
+import 'package:restaurant_app_sonic/features/checkOut/views/check_out_view.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
 import 'package:restaurant_app_sonic/features/onboarding/view/onboarding_view.dart';
@@ -24,6 +25,8 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => OnboardingView());
       case RouteNames.productDetailsView:
         return MaterialPageRoute(builder: (context) => ProductDetailsView());
+      case RouteNames.checkOutView:
+        return MaterialPageRoute(builder: (context) => const CheckOutView());
 
       case RouteNames.loginView:
         return MaterialPageRoute(

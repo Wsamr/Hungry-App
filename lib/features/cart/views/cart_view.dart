@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_sonic/core/constants/route_names.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/bottom_salary_container.dart';
 import 'package:restaurant_app_sonic/features/cart/views/widgets/cart_item_list.dart';
@@ -11,7 +12,10 @@ class CartView extends StatelessWidget {
     Screen.init(context);
     return Scaffold(
       body: CartItemsList(),
-      bottomSheet: BottomSlaryContainer(buttonName: "Check Out"),
+      bottomSheet: BottomSlaryContainer(
+        buttonName: "Check Out",
+        onTap: () => Navigator.pushNamed(context, RouteNames.checkOutView),
+      ),
     );
   }
 }

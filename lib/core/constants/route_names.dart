@@ -12,6 +12,7 @@ class RouteNames {
   // home
   static const String homeView = 'homeView';
   static const String productDetailsView = 'productDetailsView';
+  static const String checkOutView = 'checkOutView';
 
   //  profile
   static const String profileView = 'profileView';

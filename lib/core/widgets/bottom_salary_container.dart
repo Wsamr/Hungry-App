@@ -31,7 +31,7 @@ class BottomSlaryContainer extends StatelessWidget {
                     color: Colors.grey,
                   ),
                 ),
-                SizedBox(height: Screen.h * .014),
+                // SizedBox(height: Screen.h * .014),
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
