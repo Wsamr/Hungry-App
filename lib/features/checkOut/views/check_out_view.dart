@@ -1,81 +1,102 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_sonic/core/constants/app_images.dart';
+import 'package:restaurant_app_sonic/core/constants/app_strings.dart';
+import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
+import 'package:restaurant_app_sonic/core/utils/screen.dart';
+import 'package:restaurant_app_sonic/core/widgets/custom_success_alert_dialog.dart';
+import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_type.dart';
+import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_model_ui.dart';
+import 'package:restaurant_app_sonic/features/checkOut/views/widgets/payment_methods_list.dart';
+import 'package:svg_flutter/svg_flutter.dart';
+import 'package:restaurant_app_sonic/core/constants/app_icons.dart';
 import 'package:restaurant_app_sonic/core/widgets/bottom_salary_container.dart';
+import 'package:restaurant_app_sonic/features/checkOut/views/widgets/order_details_widget.dart';
 
-class CheckOutView extends StatelessWidget {
+class CheckOutView extends StatefulWidget {
   const CheckOutView({super.key});
+
+  @override
+  State<CheckOutView> createState() => _CheckOutViewState();
+}
+
+class _CheckOutViewState extends State<CheckOutView> {
+  ValueNotifier<PaymentMethodType> paymentWayNotifier = ValueNotifier(
+    PaymentMethodType.cash,
+  );
+
+  final List<PaymentMethodModelUi> paymentMethods = [
+    PaymentMethodModelUi(
+      type: PaymentMethodType.cash,
+      title: AppStrings.cashOnDelivery,
+      color: Color(0xff3C2F2F),
+      icon: SvgPicture.asset(AppIcons.commentIcon),
+    ),
+    PaymentMethodModelUi(
+      type: PaymentMethodType.visa,
+      title: AppStrings.debitCard,
+      color: Colors.green,
+      icon: Image.asset(AppImages.visaImage),
+      subtitle: "3566 **** **** 0505",
+    ),
+  ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(backgroundColor: Colors.white),
-
       body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        padding: EdgeInsets.symmetric(horizontal: Screen.w * .04),
         child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 25),
-              mainText("Order summary"),
-              SizedBox(height: 15),
-              orderSammaryDetailRow("Order", "\$16.48"),
-              SizedBox(height: 10),
-              orderSammaryDetailRow("Taxes", "\$0.3"),
-              SizedBox(height: 10),
-              orderSammaryDetailRow("Delivery fees", "\$1.5"),
-              Divider(),
-              SizedBox(height: 10),
-              orderSammaryDetailRow("Total:", "\$18.19", isbold: true),
-              SizedBox(height: 10),
-              orderSammaryDetailRow(
-                "Estimated delivery time:",
-                "15 - 30 mins",
-                isbold: true,
-                isSmall: true,
+              SizedBox(height: Screen.h * .02),
+              OrderDetailsWidget(
+                order: "16.48",
+                taxes: "0.3",
+                deliveryFees: "1.5",
+                total: "18.19",
               ),
-              SizedBox(height: 40),
-              mainText("Payment methods"),
+              SizedBox(height: Screen.h * .05),
+              mainText(context, AppStrings.paymentMethods),
+              SizedBox(height: Screen.h * .03),
+              ValueListenableBuilder(
+                valueListenable: paymentWayNotifier,
+                builder: (context, value, child) {
+                  return PaymentMethodsList(
+                    paymentMethods: paymentMethods,
+                    paymentWayNotifier: paymentWayNotifier,
+                  );
+                },
+              ),
             ],
           ),
         ),
       ),
-      bottomNavigationBar: BottomSlaryContainer(buttonName: "check out"),
-    );
-  }
-
-  Text mainText(String title) {
-    return Text(
-      title,
-      style: TextStyle(fontSize: 20, fontWeight: FontWeight.w700),
-    );
-  }
-
-  Row orderSammaryDetailRow(
-    String title,
-    String price, {
-    bool isbold = false,
-    bool isSmall = false,
-  }) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Text(
-          title,
-          style: TextStyle(
-            fontSize: isSmall ? 13 : 15,
-            color: isbold ? Colors.black : Colors.grey.shade700,
-            fontWeight: isbold ? FontWeight.bold : FontWeight.w500,
-          ),
+      bottomNavigationBar: BottomSlaryContainer(
+        buttonName: AppStrings.checkOut,
+        onTap: () => showDialog(
+          context: context,
+          builder: (context) {
+            return CustomSuccessAlertDialog(
+              imagePath: AppIcons.sucessIcon,
+              title: AppStrings.success,
+              subTitle: AppStrings.yourPaymentWasSucessP,
+              onPressed: () {},
+            );
+          },
         ),
-        Text(
-          price,
-          style: TextStyle(
-            fontSize: isSmall ? 13 : 15,
-            color: isbold ? Colors.black : Colors.grey.shade700,
-            fontWeight: isbold ? FontWeight.bold : FontWeight.w500,
-          ),
-        ),
-      ],
+      ),
     );
   }
+}
+
+Text mainText(BuildContext context, String title) {
+  return Text(
+    title,
+    style: TextStyle(
+      fontSize: ResTextSize.getResFontSize(context, fontSize: 20),
+      fontWeight: FontWeight.w700,
+    ),
+  );
 }

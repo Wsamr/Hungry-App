@@ -10,6 +10,9 @@ import 'package:restaurant_app_sonic/core/utils/validatior.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_buttom_sheet.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_text_form_feild_widget.dart';
+import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_model_ui.dart';
+import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_type.dart';
+import 'package:restaurant_app_sonic/features/checkOut/views/widgets/payment_way_card_widget.dart';
 import 'package:restaurant_app_sonic/features/profile/cubit/profile_cubit.dart';
 import 'package:restaurant_app_sonic/features/profile/data/model/update_profile_model.dart';
 import 'package:restaurant_app_sonic/features/profile/view/widgets/custom_image_box.dart';
@@ -107,7 +110,7 @@ class _ProfileViewState extends State<ProfileView> {
                       spacing: 30,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
-                        SizedBox(height: 30),
+                        SizedBox(height: 10),
                         CustomImageBox(
                           screenHeight: screenHeight,
                           screenWidth: screenWidth,
@@ -155,6 +158,17 @@ class _ProfileViewState extends State<ProfileView> {
                           textInputAction: TextInputAction.done,
                           validator: Validatior.addressValidation,
                           keyboardType: TextInputType.streetAddress,
+                        ),
+                        PaymentWayCardWidget(
+                          groupValue: "visa",
+                          onChanged: (value) {},
+                          value: "visa",
+                          paymentMethod: PaymentMethodModelUi(
+                            type: PaymentMethodType.visa,
+                            title: "Debit card",
+                            color: Colors.green,
+                            icon: Image.asset(AppImages.visaImage),
+                          ),
                         ),
                       ],
                     ),
