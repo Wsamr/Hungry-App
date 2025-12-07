@@ -25,7 +25,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       user = await profileRepo.getProfileInfo();
       emit(ProfileInfoSuccess(user: user!));
     } on ServerException catch (e) {
-      emit(ProfileInfoFailure(errorMassege: e.errModel.errorMessage));
+      emit(ProfileInfoFailure(errorMassege: e.errorModel.errorMassage));
     } on Exception catch (e) {
       emit(ProfileInfoFailure(errorMassege: e.toString()));
     }
@@ -37,7 +37,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       this.user = await profileRepo.updateProfileInfo(user);
       emit(UpdateProfileSuccess(user: this.user!));
     } on ServerException catch (e) {
-      emit(UpdateProfileFailure(errorMassege: e.errModel.errorMessage));
+      emit(UpdateProfileFailure(errorMassege: e.errorModel.errorMassage));
     } on Exception catch (e) {
       emit(UpdateProfileFailure(errorMassege: e.toString()));
     }
@@ -49,7 +49,7 @@ class ProfileCubit extends Cubit<ProfileState> {
       final response = await profileRepo.logout();
       emit(LogOutSuccess());
     } on ServerException catch (e) {
-      emit(LogOutFailure(errorMassege: e.errModel.errorMessage));
+      emit(LogOutFailure(errorMassege: e.errorModel.errorMassage));
     } on Exception catch (e) {
       emit(LogOutFailure(errorMassege: e.toString()));
     }

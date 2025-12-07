@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/features/home/data/repo/fake_repo.dart';
 import 'package:restaurant_app_sonic/features/home/view/widgets/categories_list.dart';
@@ -13,21 +14,37 @@ class HomeView extends StatelessWidget {
     Screen.init(context);
     return GestureDetector(
       onTap: () => FocusScope.of(context).unfocus(),
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        body: SafeArea(
-          child: CustomScrollView(
-            slivers: [
-              SliverToBoxAdapter(child: SizedBox(height: Screen.h * .03)),
-              CustomSliverAppBar(user: user),
-              SliverToBoxAdapter(child: SizedBox(height: Screen.h * .01)),
-              SliverToBoxAdapter(child: CustomSearchTextField()),
-              SliverToBoxAdapter(child: SizedBox(height: Screen.h * .04)),
-              SliverToBoxAdapter(child: CategoriesList(category: category)),
-              ProductsGridList(),
-            ],
-          ),
-        ),
+      child: StreamBuilder<InternetStatus>(
+        stream: InternetConnection().onStatusChange,
+        builder: (context, snapshot) {
+          final status = snapshot.data ?? InternetStatus.disconnected;
+          return status == InternetStatus.connected
+              ? Scaffold(
+                  backgroundColor: Colors.white,
+                  body: SafeArea(
+                    child: CustomScrollView(
+                      slivers: [
+                        SliverToBoxAdapter(
+                          child: SizedBox(height: Screen.h * .03),
+                        ),
+                        CustomSliverAppBar(user: user),
+                        SliverToBoxAdapter(
+                          child: SizedBox(height: Screen.h * .01),
+                        ),
+                        SliverToBoxAdapter(child: CustomSearchTextField()),
+                        SliverToBoxAdapter(
+                          child: SizedBox(height: Screen.h * .04),
+                        ),
+                        SliverToBoxAdapter(
+                          child: CategoriesList(category: category),
+                        ),
+                        ProductsGridList(),
+                      ],
+                    ),
+                  ),
+                )
+              : Center(child: Text("Check Your Internet"));
+        },
       ),
     );
   }

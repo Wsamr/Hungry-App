@@ -5,6 +5,8 @@ import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_tab_bar.dart';
 import 'package:restaurant_app_sonic/features/cart/views/cart_view.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
+import 'package:restaurant_app_sonic/features/orders_history/presentation/cubit/order_history_cubit.dart';
+import 'package:restaurant_app_sonic/features/orders_history/presentation/views/order_history_view.dart';
 import 'package:restaurant_app_sonic/features/profile/cubit/profile_cubit.dart';
 import 'package:restaurant_app_sonic/features/profile/view/profile_view.dart';
 
@@ -13,7 +15,7 @@ class BottomNavWidget extends StatelessWidget {
   final List<Widget> screens = const [
     HomeView(),
     CartView(),
-    Scaffold(),
+    OrderHistoryView(),
     ProfileView(),
   ];
   int index = 0;
@@ -25,10 +27,10 @@ class BottomNavWidget extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            // create: (context) => sl<ProfileCubit>()..getProfileInfo(),
-            create: (context) => sl<ProfileCubit>(),
-            child: const ProfileView(),
+            create: (context) => sl<ProfileCubit>()..getProfileInfo(),
+            // create: (context) => sl<ProfileCubit>(),
           ),
+          BlocProvider(create: (context) => sl<OrderHistoryCubit>()),
         ],
         child: Scaffold(
           bottomNavigationBar: CustomTabBar(),

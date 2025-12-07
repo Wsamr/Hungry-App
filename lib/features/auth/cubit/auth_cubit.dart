@@ -27,7 +27,7 @@ class AuthCubit extends Cubit<AuthState> {
       }
       emit(LoginSuccess(token: token!));
     } on ServerException catch (e) {
-      emit(LoginFailure(errorMessage: e.errModel.errorMessage));
+      emit(LoginFailure(errorMessage: e.errorModel.errorMassage));
     } catch (e) {
       emit(LoginFailure(errorMessage: e.toString()));
     }
@@ -51,8 +51,8 @@ class AuthCubit extends Cubit<AuthState> {
       }
       emit(ResgisterSuccess(token: token!));
     } on ServerException catch (e) {
-      print("noooooooooooooooooooooooooooooooo ${e.errModel.errorMessage}");
-      emit(ResgisterFailure(errorMessage: e.errModel.errorMessage));
+      print("noooooooooooooooooooooooooooooooo ${e.errorModel.errorMassage}");
+      emit(ResgisterFailure(errorMessage: e.errorModel.errorMassage));
     } catch (e) {
       print("noooooooooooooooooooooooooooooooo${e.toString()}");
       emit(ResgisterFailure(errorMessage: e.toString()));

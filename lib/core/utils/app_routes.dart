@@ -10,6 +10,9 @@ import 'package:restaurant_app_sonic/features/checkOut/views/check_out_view.dart
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
 import 'package:restaurant_app_sonic/features/onboarding/view/onboarding_view.dart';
+import 'package:restaurant_app_sonic/features/orders_history/presentation/cubit/order_history_cubit.dart';
+import 'package:restaurant_app_sonic/features/orders_history/presentation/data/models/order_history_model.dart';
+import 'package:restaurant_app_sonic/features/orders_history/presentation/views/order_details_view.dart';
 import 'package:restaurant_app_sonic/features/product/views/product_details_view.dart';
 import 'package:restaurant_app_sonic/features/profile/cubit/profile_cubit.dart';
 import 'package:restaurant_app_sonic/features/profile/view/profile_view.dart';
@@ -27,6 +30,14 @@ class AppRoutes {
         return MaterialPageRoute(builder: (context) => ProductDetailsView());
       case RouteNames.checkOutView:
         return MaterialPageRoute(builder: (context) => const CheckOutView());
+      case RouteNames.orderDetaisView:
+        OrderHistoryModel order = settings.arguments as OrderHistoryModel;
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider.value(
+            value: sl<OrderHistoryCubit>(),
+            child: OrderDetailsView(order: order),
+          ),
+        );
 
       case RouteNames.loginView:
         return MaterialPageRoute(

@@ -1,10 +1,10 @@
 import 'package:restaurant_app_sonic/core/constants/api_endpoints.dart';
 
 class ErrorModel {
-  String errorMessage;
-  ErrorModel({required this.errorMessage});
+  String errorMassage;
+  ErrorModel({required this.errorMassage});
 
   factory ErrorModel.fromJson(Map<String, dynamic> jsonData) {
-    return ErrorModel(errorMessage: jsonData[ApiKeys.message]);
+    return ErrorModel(errorMassage: jsonData[ApiKeys.message]);
   }
 }

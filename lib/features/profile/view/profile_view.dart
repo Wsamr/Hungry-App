@@ -24,7 +24,8 @@ class ProfileView extends StatefulWidget {
   State<ProfileView> createState() => _ProfileViewState();
 }
 
-class _ProfileViewState extends State<ProfileView> {
+class _ProfileViewState extends State<ProfileView>
+    with AutomaticKeepAliveClientMixin {
   FocusNode focusNode = FocusNode();
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
@@ -71,6 +72,7 @@ class _ProfileViewState extends State<ProfileView> {
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     final screenHeight = MediaQuery.of(context).size.height;
     final screenWidth = MediaQuery.of(context).size.width;
     return GestureDetector(
@@ -207,4 +209,8 @@ class _ProfileViewState extends State<ProfileView> {
       ),
     );
   }
+
+  @override
+  // TODO: implement wantKeepAlive
+  bool get wantKeepAlive => true;
 }

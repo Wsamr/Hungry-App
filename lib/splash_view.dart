@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:internet_connection_checker_plus/internet_connection_checker_plus.dart';
 import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
@@ -18,7 +19,17 @@ class _SplashViewState extends State<SplashView> {
   @override
   void initState() {
     super.initState();
+    checkInternet();
     checkVisitedAndAuth();
+  }
+
+  Future<void> checkInternet() async {
+    final bool isConnected = await InternetConnection().hasInternetAccess;
+    if (isConnected) {
+      print('Connected!');
+    } else {
+      print('No internet connection.');
+    }
   }
 
   Future<bool> isVisitedFun() async {

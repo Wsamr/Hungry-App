@@ -5,6 +5,10 @@ abstract class ApiEndpoints {
   static const String loginEndPoint = "/login";
   static const String registerEndPoint = "/register";
 
+  // order history
+
+  static const String ordersHistory = "/orders";
+  static const String orderHistoryDetail = "/orders/";
   // profile
   static const String getProfileEndPoint = "/profile";
   static const String updateProfileEndPoint = "/update-profile";
@@ -16,4 +20,23 @@ abstract class ApiKeys {
   static const String applicationJson = "application/json";
   static const String message = "message";
   static const String authorization = "Authorization";
+
+  // order history
+  static const String data = "data";
+  static const String id = "id";
+  static const String status = "status";
+  static const String totalPrice = "total_price";
+  static const String createdAt = "created_at";
+  static const String productImage = "product_image";
+
+  // order detail item
+  static const String items = "items";
+  static const String productId = "product_id";
+  static const String name = "name";
+  static const String image = "image";
+  static const String quantity = "quantity";
+  static const String price = "price";
+  static const String spicy = "spicy";
+  static const String toppings = "toppings";
+  static const String sideOptions = "side_options";
 }
