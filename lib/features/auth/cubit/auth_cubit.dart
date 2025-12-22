@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
 import 'package:restaurant_app_sonic/core/constants/cache_keys.dart';
 import 'package:restaurant_app_sonic/core/errors/exceptions.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/user_model.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/login_models/login_request_model.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/login_models/login_response_model.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/register_models/register_request_model.dart';
@@ -24,6 +25,10 @@ class AuthCubit extends Cubit<AuthState> {
       final String? token = response.data?.token;
       if (token != null && token.isNotEmpty) {
         await cacheHelper.saveData(CacheKeys.token, token);
+        await cacheHelper.saveData(
+          CacheKeys.user,
+          UserModel.mapToJson(response.data!),
+        );
       }
       emit(LoginSuccess(token: token!));
     } on ServerException catch (e) {
@@ -48,6 +53,10 @@ class AuthCubit extends Cubit<AuthState> {
       final String? token = response.data?.token;
       if (token != null && token.isNotEmpty) {
         await cacheHelper.saveData(CacheKeys.token, token);
+        await cacheHelper.saveData(
+          CacheKeys.user,
+          UserModel.mapToJson(response.data!),
+        );
       }
       emit(ResgisterSuccess(token: token!));
     } on ServerException catch (e) {

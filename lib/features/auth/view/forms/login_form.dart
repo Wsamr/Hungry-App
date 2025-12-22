@@ -32,7 +32,11 @@ class LoginForm extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
         }
         if (state is LoginSuccess) {
-          Navigator.pushNamed(context, RouteNames.bottomNavWidget);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RouteNames.bottomNavWidget,
+            (route) => false,
+          );
         }
       },
       child: Form(

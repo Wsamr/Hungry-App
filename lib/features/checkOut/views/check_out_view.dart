@@ -12,14 +12,10 @@ import 'package:restaurant_app_sonic/core/constants/app_icons.dart';
 import 'package:restaurant_app_sonic/core/widgets/bottom_salary_container.dart';
 import 'package:restaurant_app_sonic/features/checkOut/views/widgets/order_details_widget.dart';
 
-class CheckOutView extends StatefulWidget {
-  const CheckOutView({super.key});
+class CheckOutView extends StatelessWidget {
+  CheckOutView({super.key, required this.totalPrice});
+  final String totalPrice;
 
-  @override
-  State<CheckOutView> createState() => _CheckOutViewState();
-}
-
-class _CheckOutViewState extends State<CheckOutView> {
   ValueNotifier<PaymentMethodType> paymentWayNotifier = ValueNotifier(
     PaymentMethodType.cash,
   );
@@ -52,10 +48,10 @@ class _CheckOutViewState extends State<CheckOutView> {
             children: [
               SizedBox(height: Screen.h * .02),
               OrderDetailsWidget(
-                order: "16.48",
+                order: totalPrice,
                 taxes: "0.3",
                 deliveryFees: "1.5",
-                total: "18.19",
+                total: (double.parse(totalPrice) + .3 + 1.5).toString(),
               ),
               SizedBox(height: Screen.h * .05),
               mainText(context, AppStrings.paymentMethods),
@@ -74,6 +70,7 @@ class _CheckOutViewState extends State<CheckOutView> {
         ),
       ),
       bottomNavigationBar: BottomSlaryContainer(
+        salary: (double.parse(totalPrice) + .3 + 1.5).toString(),
         isLoading: false,
         buttonName: AppStrings.checkOut,
         onTap: () => showDialog(

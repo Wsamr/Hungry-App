@@ -5,6 +5,9 @@ import 'package:restaurant_app_sonic/core/api/dio_consumer.dart';
 import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
 import 'package:restaurant_app_sonic/features/auth/cubit/auth_cubit.dart';
 import 'package:restaurant_app_sonic/features/auth/data/repo/auth_repo.dart';
+import 'package:restaurant_app_sonic/features/cart/cart_cubit/cart_cubit.dart';
+import 'package:restaurant_app_sonic/features/cart/data/repo/cart_repo.dart';
+import 'package:restaurant_app_sonic/features/cart/data/web/cart_web_service.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/data/repo/home_repo.dart';
 import 'package:restaurant_app_sonic/features/home/data/web/home_web_services.dart';
@@ -42,8 +45,14 @@ setUpServiceLocator() {
   sl.registerLazySingleton<HomeWebServices>(
     () => HomeWebServices(apiConsumer: sl<ApiConsumer>()),
   );
+  sl.registerLazySingleton<CartWebService>(
+    () => CartWebService(apiConsumer: sl<ApiConsumer>()),
+  );
   sl.registerLazySingleton<HomeRepo>(
     () => HomeRepoImple(homeWebServices: sl<HomeWebServices>()),
+  );
+  sl.registerLazySingleton<CartRepo>(
+    () => CartRepoImple(cartWebService: sl<CartWebService>()),
   );
   sl.registerLazySingleton<ProductRepo>(
     () => ProductRepoImple(productWebService: sl<ProductWebService>()),
@@ -67,6 +76,7 @@ setUpServiceLocator() {
   sl.registerFactory(() => HomeCubit(sl<HomeRepo>()));
 
   sl.registerFactory(() => ProfileCubit(profileRepo: sl<ProfileRepo>()));
+  sl.registerFactory(() => CartCubit(sl<CartRepo>()));
   sl.registerFactory(() => ProductOptionsCubit(sl<ProductRepo>()));
 
   // order history

@@ -50,7 +50,10 @@ class AppRoutes {
           ),
         );
       case RouteNames.checkOutView:
-        return MaterialPageRoute(builder: (context) => const CheckOutView());
+        final String totalPrice = settings.arguments as String;
+        return MaterialPageRoute(
+          builder: (context) => CheckOutView(totalPrice: totalPrice),
+        );
       case RouteNames.orderDetaisView:
         OrderHistoryModel order = settings.arguments as OrderHistoryModel;
         return MaterialPageRoute(

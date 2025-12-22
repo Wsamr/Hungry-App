@@ -19,6 +19,7 @@ abstract class ApiEndpoints {
   static const String sideOptionsEndPoint = "/side-options";
   static const String addToCartEndPoint = "/cart/add";
   static const String getCartEndPoint = "/cart";
+  static const String deletCartItemEndPoint = "/cart/remove/";
   static const String productsByCategoryEndPoint = "/products?category_id=";
 }
 

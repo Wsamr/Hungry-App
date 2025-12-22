@@ -15,7 +15,6 @@ import 'package:restaurant_app_sonic/features/product/logic/addtocart_cubit/prod
 import 'package:restaurant_app_sonic/features/product/logic/options_cubit/product_options_cubit.dart';
 import 'package:restaurant_app_sonic/features/product/views/widgets/product_customization_section.dart';
 import 'package:restaurant_app_sonic/features/product/views/widgets/product_options_section.dart';
-import 'package:svg_flutter/svg.dart';
 
 class ProductDetailsView extends StatelessWidget {
   const ProductDetailsView({super.key, required this.product});

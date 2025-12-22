@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
+import 'package:restaurant_app_sonic/features/cart/data/models/cart_item_model.dart';
 import 'package:restaurant_app_sonic/features/cart/views/widgets/cart_item_details_section.dart';
 import 'package:restaurant_app_sonic/features/cart/views/widgets/cart_item_quanity_section.dart';
 
@@ -11,11 +11,13 @@ class CartItemWidget extends StatelessWidget {
     this.addOnTap,
     this.removeOnTap,
     this.value,
+    required this.cartItemModel,
   });
   final void Function()? minusOnTap;
   final void Function()? addOnTap;
   final void Function()? removeOnTap;
   final int? value;
+  final CartItemModel cartItemModel;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -27,18 +29,11 @@ class CartItemWidget extends StatelessWidget {
         ),
         child: Row(
           children: [
-            CartItemDetailseSection(
-              image: AppImages.testImage,
-              title: "Hamburger",
-              des: "Veggie Burger",
-            ),
-            SizedBox(width: Screen.h * .04),
+            CartItemDetailseSection(cartItemModel: cartItemModel),
             Expanded(
-              child: CartItemQuantitySection(
+              child: RemoveSection(
+                cartItemModel: cartItemModel,
                 removeOnTap: removeOnTap,
-                addOnTap: addOnTap,
-                minusOnTap: minusOnTap,
-                value: value,
               ),
             ),
           ],

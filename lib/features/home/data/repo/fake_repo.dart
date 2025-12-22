@@ -1,4 +1,5 @@
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/user_model.dart';
 import 'package:restaurant_app_sonic/features/home/data/models/product_model.dart';
 import 'package:restaurant_app_sonic/features/home/view/models/user_header_model.dart';
 
@@ -55,7 +56,9 @@ final List<String> fakeCategory = const [
   "Calssic",
 ];
 
-final UserHeaderModel user = UserHeaderModel(
+final UserModel user = UserModel(
   name: "Wessam",
-  imagePath: AppImages.networkProfleImage,
+  image: AppImages.networkProfleImage,
+  email: "wsamr600@gmail.com",
+  token: "gghj",
 );

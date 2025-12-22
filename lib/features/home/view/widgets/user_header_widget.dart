@@ -3,12 +3,13 @@ import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/user_model.dart';
 import 'package:restaurant_app_sonic/features/home/view/models/user_header_model.dart';
 import 'package:svg_flutter/svg.dart';
 
 class UserHeaderWidget extends StatelessWidget {
   const UserHeaderWidget({super.key, required this.user});
-  final UserHeaderModel user;
+  final UserModel user;
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class UserHeaderWidget extends StatelessWidget {
           Spacer(),
           CircleAvatar(
             radius: Screen.w * .08,
-            backgroundImage: NetworkImage(user.imagePath),
+            backgroundImage: NetworkImage(user.image ?? AppImages.personImage),
           ),
         ],
       ),

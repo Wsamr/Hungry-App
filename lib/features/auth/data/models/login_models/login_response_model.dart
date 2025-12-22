@@ -1,9 +1,9 @@
-import 'package:restaurant_app_sonic/features/auth/data/models/data_model.dart';
+import 'package:restaurant_app_sonic/features/auth/data/models/user_model.dart';
 
 class LoginResponseModel {
   final int code;
   final String message;
-  final DataModel? data;
+  final UserModel? data;
 
   LoginResponseModel({
     required this.code,
@@ -15,7 +15,7 @@ class LoginResponseModel {
     return LoginResponseModel(
       code: json['code'],
       message: json['message'],
-      data: (json['data'] != null) ? DataModel.fromJson(json['data']) : null,
+      data: (json['data'] != null) ? UserModel.fromJson(json['data']) : null,
     );
   }
 }
