@@ -1,4 +1,3 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:restaurant_app_sonic/core/api/api_consumer.dart';
 import 'package:restaurant_app_sonic/core/constants/api_endpoints.dart';
 import 'package:restaurant_app_sonic/core/errors/exceptions.dart';

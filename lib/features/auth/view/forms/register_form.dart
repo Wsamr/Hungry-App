@@ -48,7 +48,11 @@ class RegisterForm extends StatelessWidget {
           ).showSnackBar(SnackBar(content: Text(state.errorMessage)));
         }
         if (state is ResgisterSuccess) {
-          Navigator.pushNamed(context, RouteNames.bottomNavWidget);
+          Navigator.pushNamedAndRemoveUntil(
+            context,
+            RouteNames.bottomNavWidget,
+            (route) => false,
+          );
         }
       },
       builder: (context, state) {
@@ -157,8 +161,8 @@ class RegisterForm extends StatelessWidget {
                 onTap: () {
                   Navigator.pop(context);
                 },
-                hyperText: "SIGN In",
-                mainText: "Have Already Account ? ",
+                hyperText: "SIGN IN",
+                mainText: "Already have an account ? ",
               ),
             ],
           ),
