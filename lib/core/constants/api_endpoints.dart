@@ -13,6 +13,13 @@ abstract class ApiEndpoints {
   static const String getProfileEndPoint = "/profile";
   static const String updateProfileEndPoint = "/update-profile";
   static const String logoutEndPoint = "/logout";
+  static const String categoriesEndPoint = "/categories";
+  static const String productsEndPoint = "/products";
+  static const String toppingsEndPoint = "/toppings";
+  static const String sideOptionsEndPoint = "/side-options";
+  static const String addToCartEndPoint = "/cart/add";
+  static const String getCartEndPoint = "/cart";
+  static const String productsByCategoryEndPoint = "/products?category_id=";
 }
 
 abstract class ApiKeys {
@@ -21,15 +28,15 @@ abstract class ApiKeys {
   static const String message = "message";
   static const String authorization = "Authorization";
 
-  // order history
   static const String data = "data";
   static const String id = "id";
   static const String status = "status";
   static const String totalPrice = "total_price";
   static const String createdAt = "created_at";
   static const String productImage = "product_image";
+  static const String description = "description";
+  static const String rating = "rating";
 
-  // order detail item
   static const String items = "items";
   static const String productId = "product_id";
   static const String name = "name";

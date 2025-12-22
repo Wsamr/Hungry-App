@@ -65,3 +65,5 @@ void handleDioExceptions(DioException e) {
       }
   }
 }
+
+class NoInternetException implements Exception {}

@@ -5,9 +5,17 @@ import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_container.dart';
 
 class BottomSlaryContainer extends StatelessWidget {
-  const BottomSlaryContainer({super.key, this.buttonName, this.onTap});
+  const BottomSlaryContainer({
+    super.key,
+    this.buttonName,
+    this.onTap,
+    this.salary,
+    required this.isLoading,
+  });
   final String? buttonName;
+  final String? salary;
   final void Function()? onTap;
+  final bool isLoading;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -23,15 +31,6 @@ class BottomSlaryContainer extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  "Total",
-                  style: TextStyle(
-                    fontSize: ResTextSize.getResFontSize(context, fontSize: 24),
-                    fontWeight: FontWeight.w500,
-                    color: Colors.grey,
-                  ),
-                ),
-                // SizedBox(height: Screen.h * .014),
                 RichText(
                   text: TextSpan(
                     style: TextStyle(
@@ -39,7 +38,7 @@ class BottomSlaryContainer extends StatelessWidget {
                       fontWeight: FontWeight.bold,
                       fontSize: ResTextSize.getResFontSize(
                         context,
-                        fontSize: 36,
+                        fontSize: 28,
                       ),
                     ),
                     children: [
@@ -47,13 +46,14 @@ class BottomSlaryContainer extends StatelessWidget {
                         text: "\$",
                         style: TextStyle(color: AppColors.mainColor),
                       ),
-                      TextSpan(text: "18.19"),
+                      TextSpan(text: salary ?? "18.19"),
                     ],
                   ),
                 ),
               ],
             ),
             CustomButtonContainer(
+              isLoading: isLoading,
               title: buttonName ?? "Add To Cart",
               onTap: onTap,
             ),

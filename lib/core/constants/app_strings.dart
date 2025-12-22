@@ -1,4 +1,10 @@
 abstract class AppStrings {
+  // product details
+  static String description = "Description";
+  static String customization = "Customization";
+  static String toppings = "Toppings";
+  static String sideOptions = "Side Options";
+
   // check out
 
   static String orderSummary = "Order Summary";

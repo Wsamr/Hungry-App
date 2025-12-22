@@ -1,4 +1,5 @@
 import 'package:restaurant_app_sonic/core/constants/api_endpoints.dart';
+import 'package:restaurant_app_sonic/core/models/option_model.dart';
 
 class OrderDetailsModel {
   final int id;
@@ -34,8 +35,8 @@ class OrderItemModel {
   final int quantity;
   final String price;
   final String spicy;
-  final List<OrderOptionModel> topping;
-  final List<OrderOptionModel> sideOption;
+  final List<OptionModel> topping;
+  final List<OptionModel> sideOption;
 
   OrderItemModel({
     required this.image,
@@ -56,26 +57,12 @@ class OrderItemModel {
       price: json[ApiKeys.price].toString(),
       spicy: json[ApiKeys.spicy].toString(),
       topping: (json[ApiKeys.toppings] as List? ?? [])
-          .map((e) => OrderOptionModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => OptionModel.fromJson(e as Map<String, dynamic>))
           .toList(),
 
       sideOption: (json[ApiKeys.sideOptions] as List? ?? [])
-          .map((e) => OrderOptionModel.fromJson(e as Map<String, dynamic>))
+          .map((e) => OptionModel.fromJson(e as Map<String, dynamic>))
           .toList(),
-    );
-  }
-}
-
-class OrderOptionModel {
-  final int id;
-  final String name;
-  final String image;
-  OrderOptionModel({required this.id, required this.name, required this.image});
-  factory OrderOptionModel.fromJson(Map<String, dynamic> json) {
-    return OrderOptionModel(
-      id: json[ApiKeys.id],
-      name: json[ApiKeys.name],
-      image: json[ApiKeys.image],
     );
   }
 }

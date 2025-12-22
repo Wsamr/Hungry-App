@@ -74,11 +74,12 @@ class _CheckOutViewState extends State<CheckOutView> {
         ),
       ),
       bottomNavigationBar: BottomSlaryContainer(
+        isLoading: false,
         buttonName: AppStrings.checkOut,
         onTap: () => showDialog(
           context: context,
           builder: (context) {
-            return CustomSuccessAlertDialog(
+            return CustomAlertDialog(
               imagePath: AppIcons.sucessIcon,
               title: AppStrings.success,
               subTitle: AppStrings.yourPaymentWasSucessP,

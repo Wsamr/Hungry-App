@@ -5,8 +5,8 @@ import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
 import 'package:svg_flutter/svg.dart';
 
-class CustomSuccessAlertDialog extends StatelessWidget {
-  const CustomSuccessAlertDialog({
+class CustomAlertDialog extends StatelessWidget {
+  const CustomAlertDialog({
     super.key,
     required this.title,
     this.subTitle,
@@ -35,7 +35,7 @@ class CustomSuccessAlertDialog extends StatelessWidget {
           Text(
             title,
             style: TextStyle(
-              fontSize: 24,
+              fontSize: ResTextSize.getResFontSize(context, fontSize: 24),
               fontWeight: FontWeight.bold,
               color: AppColors.mainColor,
             ),

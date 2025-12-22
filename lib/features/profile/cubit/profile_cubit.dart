@@ -19,39 +19,39 @@ class ProfileCubit extends Cubit<ProfileState> {
     emit(UploadImage());
   }
 
-  getProfileInfo() async {
-    try {
-      emit(ProfileInfoLoading());
-      user = await profileRepo.getProfileInfo();
-      emit(ProfileInfoSuccess(user: user!));
-    } on ServerException catch (e) {
-      emit(ProfileInfoFailure(errorMassege: e.errorModel.errorMassage));
-    } on Exception catch (e) {
-      emit(ProfileInfoFailure(errorMassege: e.toString()));
-    }
-  }
+  // getProfileInfo() async {
+  //   try {
+  //     emit(ProfileInfoLoading());
+  //     user = await profileRepo.getProfileInfo();
+  //     emit(ProfileInfoSuccess(user: user!));
+  //   } on ServerException catch (e) {
+  //     emit(ProfileInfoFailure(errorMassege: e.errorModel.errorMassage));
+  //   } on Exception catch (e) {
+  //     emit(ProfileInfoFailure(errorMassege: e.toString()));
+  //   }
+  // }
 
-  updateProfile(UpdateProfileModel? user) async {
-    try {
-      emit(UpdateProfileLoading());
-      this.user = await profileRepo.updateProfileInfo(user);
-      emit(UpdateProfileSuccess(user: this.user!));
-    } on ServerException catch (e) {
-      emit(UpdateProfileFailure(errorMassege: e.errorModel.errorMassage));
-    } on Exception catch (e) {
-      emit(UpdateProfileFailure(errorMassege: e.toString()));
-    }
-  }
+  // updateProfile(UpdateProfileModel? user) async {
+  //   try {
+  //     emit(UpdateProfileLoading());
+  //     this.user = await profileRepo.updateProfileInfo(user);
+  //     emit(UpdateProfileSuccess(user: this.user!));
+  //   } on ServerException catch (e) {
+  //     emit(UpdateProfileFailure(errorMassege: e.errorModel.errorMassage));
+  //   } on Exception catch (e) {
+  //     emit(UpdateProfileFailure(errorMassege: e.toString()));
+  //   }
+  // }
 
-  logOut() async {
-    try {
-      emit(LogOutLoading());
-      final response = await profileRepo.logout();
-      emit(LogOutSuccess());
-    } on ServerException catch (e) {
-      emit(LogOutFailure(errorMassege: e.errorModel.errorMassage));
-    } on Exception catch (e) {
-      emit(LogOutFailure(errorMassege: e.toString()));
-    }
-  }
+  // logOut() async {
+  //   try {
+  //     emit(LogOutLoading());
+  //     final response = await profileRepo.logout();
+  //     emit(LogOutSuccess());
+  //   } on ServerException catch (e) {
+  //     emit(LogOutFailure(errorMassege: e.errorModel.errorMassage));
+  //   } on Exception catch (e) {
+  //     emit(LogOutFailure(errorMassege: e.toString()));
+  //   }
+  // }
 }

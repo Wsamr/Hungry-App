@@ -7,6 +7,7 @@ class CustomSearchTextField extends StatelessWidget {
   final TextEditingController? controller;
   @override
   Widget build(BuildContext context) {
+    print("CustomSearchTextField");
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: Screen.w * .04),
       child: Material(

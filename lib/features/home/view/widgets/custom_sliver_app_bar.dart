@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/features/home/view/models/user_header_model.dart';
 import 'package:restaurant_app_sonic/features/home/view/widgets/user_header_widget.dart';

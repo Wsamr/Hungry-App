@@ -13,6 +13,7 @@ class CartView extends StatelessWidget {
     return Scaffold(
       body: CartItemsList(),
       bottomSheet: BottomSlaryContainer(
+        isLoading: false,
         buttonName: "Check Out",
         onTap: () => Navigator.pushNamed(context, RouteNames.checkOutView),
       ),

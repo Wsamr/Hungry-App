@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
+import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/features/home/data/models/product_model.dart';
@@ -24,17 +25,32 @@ class ProductCardWidget extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image.asset(productModel.image, height: Screen.h * .18),
+              Hero(
+                tag: productModel.id,
+                child: Center(
+                  child: FadeInImage.assetNetwork(
+                    placeholder: AppImages.sandyLoading_,
+                    image:
+                        productModel.image ??
+                        "https://png.pngtree.com/png-vector/20220505/ourmid/pngtree-not-found-not-found-rectangular-miscellaneous-vector-png-image_13370440.png",
+                  ),
+                ),
+              ),
               Text(
-                productModel.title,
+                productModel.name,
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w700,
+
                   fontSize: ResTextSize.getResFontSize(context, fontSize: 20),
                 ),
               ),
               SizedBox(height: Screen.h * .002),
               Text(
                 productModel.description,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
                 style: TextStyle(
                   fontWeight: FontWeight.w300,
                   fontSize: ResTextSize.getResFontSize(context, fontSize: 16),

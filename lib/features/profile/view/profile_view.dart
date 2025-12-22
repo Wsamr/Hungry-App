@@ -189,13 +189,13 @@ class _ProfileViewState extends State<ProfileView>
                 title: "Edit Profile",
                 size: Size(screenWidth * .45, screenHeight * .1),
                 onPressed: () {
-                  context.read<ProfileCubit>().updateProfile(
-                    UpdateProfileModel(
-                      name: name.text,
-                      email: email.text,
-                      address: address.text,
-                    ),
-                  );
+                  // context.read<ProfileCubit>().updateProfile(
+                  //   UpdateProfileModel(
+                  //     name: name.text,
+                  //     email: email.text,
+                  //     address: address.text,
+                  //   ),
+                  // );
                 },
               ),
               CustomButtonWidget(

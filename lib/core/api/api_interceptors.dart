@@ -12,6 +12,7 @@ class ApiInterceptors extends Interceptor {
   ) async {
     //headers
     options.headers[ApiKeys.accept] = ApiKeys.applicationJson;
+    options.headers["Content-Type"] = "application/json";
 
     // get tokens
     String? token = await sl<CacheHelper>().getData(CacheKeys.token);

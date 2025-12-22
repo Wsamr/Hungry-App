@@ -7,12 +7,15 @@ import 'package:restaurant_app_sonic/features/auth/view/login_view.dart';
 import 'package:restaurant_app_sonic/features/auth/view/register_view.dart';
 import 'package:restaurant_app_sonic/features/auth/cubit/auth_cubit.dart';
 import 'package:restaurant_app_sonic/features/checkOut/views/check_out_view.dart';
-import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
+import 'package:restaurant_app_sonic/features/home/data/models/product_model.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
 import 'package:restaurant_app_sonic/features/onboarding/view/onboarding_view.dart';
 import 'package:restaurant_app_sonic/features/orders_history/presentation/cubit/order_history_cubit.dart';
 import 'package:restaurant_app_sonic/features/orders_history/presentation/data/models/order_history_model.dart';
 import 'package:restaurant_app_sonic/features/orders_history/presentation/views/order_details_view.dart';
+import 'package:restaurant_app_sonic/features/product/data/repo/product_repo.dart';
+import 'package:restaurant_app_sonic/features/product/logic/addtocart_cubit/product_selection_cubit.dart';
+import 'package:restaurant_app_sonic/features/product/logic/options_cubit/product_options_cubit.dart';
 import 'package:restaurant_app_sonic/features/product/views/product_details_view.dart';
 import 'package:restaurant_app_sonic/features/profile/cubit/profile_cubit.dart';
 import 'package:restaurant_app_sonic/features/profile/view/profile_view.dart';
@@ -27,7 +30,25 @@ class AppRoutes {
       case RouteNames.onboardingView:
         return MaterialPageRoute(builder: (context) => OnboardingView());
       case RouteNames.productDetailsView:
-        return MaterialPageRoute(builder: (context) => ProductDetailsView());
+        ProductModel product = settings.arguments as ProductModel;
+        return MaterialPageRoute(
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (context) =>
+                    sl<ProductOptionsCubit>()..getOptionsLists(),
+              ),
+              BlocProvider(
+                create: (context) => ProductSelectionCubit(
+                  sl<ProductRepo>(),
+                  product.id,
+                  double.parse(product.price),
+                ),
+              ),
+            ],
+            child: ProductDetailsView(product: product),
+          ),
+        );
       case RouteNames.checkOutView:
         return MaterialPageRoute(builder: (context) => const CheckOutView());
       case RouteNames.orderDetaisView:
@@ -54,7 +75,7 @@ class AppRoutes {
           ),
         );
       case RouteNames.homeView:
-        return MaterialPageRoute(builder: (context) => HomeView());
+        return MaterialPageRoute(builder: (context) => HomeViewWe());
       case RouteNames.bottomNavWidget:
         return MaterialPageRoute(builder: (context) => BottomNavWidget());
       case RouteNames.profileView:
