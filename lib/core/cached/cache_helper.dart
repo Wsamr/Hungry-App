@@ -21,13 +21,11 @@ class CacheHelper {
   }
 
   //! remove data from local database
-
   Future<void> removeData(String key) async {
     return await secureStorage.delete(key: key);
   }
 
   //!check  if key in local database
-
   Future<bool> containKey(String key) async {
     return await secureStorage.containsKey(key: key);
   }

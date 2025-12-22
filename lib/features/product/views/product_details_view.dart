@@ -155,7 +155,7 @@ class ProductDetailsView extends StatelessWidget {
       builder: (context, state) {
         final cubit = context.read<ProductSelectionCubit>();
 
-        return BottomSlaryContainer(
+        return BottomSalaryContainer(
           isLoading: state.status == AddToCartStatus.loading,
           salary: product.price + " +",
           onTap: () async {

@@ -37,29 +37,27 @@ class _CartViewState extends State<CartView> {
                   totalPrice += e.quantity * double.parse(e.price);
                 })
               : 0;
-          return BottomSlaryContainer(
+          return BottomSalaryContainer(
             salary: totalPrice.toString(),
             isLoading: state.status == CartStatus.loading,
             buttonName: "Check Out",
-            onTap: () {
-              totalPrice == 0
-                  ? showDialog(
+            onTap: totalPrice == 0
+                ? () {
+                    showDialog(
                       context: context,
-                      builder: (context) {
-                        return CustomAlertDialog(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          title: "Cart is empty,make order First",
-                          imagePath: AppIcons.failureIcon,
-                        );
-                      },
-                    )
-                  : Navigator.of(context).pushNamed(
+                      builder: (_) => CustomAlertDialog(
+                        onPressed: () => Navigator.pop(context),
+                        title: "Cart is empty, make order First",
+                        imagePath: AppIcons.failureIcon,
+                      ),
+                    );
+                  }
+                : () {
+                    Navigator.of(context).pushNamed(
                       RouteNames.checkOutView,
                       arguments: totalPrice.toString(),
                     );
-            },
+                  },
           );
         },
       ),

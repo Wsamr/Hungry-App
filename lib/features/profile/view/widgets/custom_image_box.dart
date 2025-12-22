@@ -1,8 +1,6 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 
 import 'package:restaurant_app_sonic/core/constants/app_colors.dart';
-import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 
 class CustomImageBox extends StatelessWidget {
   const CustomImageBox({
@@ -24,17 +22,17 @@ class CustomImageBox extends StatelessWidget {
     return Stack(
       children: [
         Container(
-          height: screenHeight * .2,
-          width: screenWidth * .4,
+          height: screenHeight * .15,
+          width: screenWidth * .3,
           decoration: BoxDecoration(
             border: Border.all(color: AppColors.mainColor, width: 8),
-            borderRadius: BorderRadius.circular(10),
+            shape: BoxShape.circle,
             image: DecorationImage(image: image, fit: BoxFit.cover),
           ),
         ),
         Positioned(
-          bottom: 0,
-          right: 0,
+          bottom: 10,
+          right: 10,
           child: GestureDetector(
             onTap: onTap,
             child: Container(
@@ -42,7 +40,7 @@ class CustomImageBox extends StatelessWidget {
               width: screenWidth * .1,
               decoration: BoxDecoration(
                 color: AppColors.mainColor,
-                shape: BoxShape.rectangle,
+                shape: BoxShape.circle,
               ),
               child: Icon(Icons.add, color: Colors.white),
             ),

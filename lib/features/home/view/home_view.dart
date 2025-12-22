@@ -6,6 +6,7 @@ import 'package:restaurant_app_sonic/core/service/service_locator.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/features/auth/data/models/user_model.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
+import 'package:restaurant_app_sonic/features/home/data/models/product_model.dart';
 import 'package:restaurant_app_sonic/features/home/view/widgets/custom_search_text_field.dart';
 import 'package:restaurant_app_sonic/features/home/view/widgets/custom_sliver_app_bar.dart';
 import 'package:restaurant_app_sonic/features/home/view/widgets/home_body_widget.dart';
@@ -20,10 +21,23 @@ class HomeViewWe extends StatefulWidget {
 
 class _HomeViewWeState extends State<HomeViewWe> {
   final ValueNotifier<int> categoryNotidier = ValueNotifier(0);
+  final TextEditingController searchController = TextEditingController();
+  final ValueNotifier<List<ProductModel>> filteredProducts = ValueNotifier([]);
+
   UserModel? user;
   @override
   void initState() {
     _getUserInfo();
+    searchController.addListener(() {
+      final query = searchController.text.toLowerCase();
+      final products = context.read<HomeCubit>().products;
+
+      filteredProducts.value = query.isEmpty
+          ? []
+          : products
+                .where((product) => product.name.toLowerCase().contains(query))
+                .toList();
+    });
     super.initState();
   }
 
@@ -50,7 +64,9 @@ class _HomeViewWeState extends State<HomeViewWe> {
                     ? UserHeaderLoadingSliver()
                     : CustomSliverAppBar(user: user!),
                 SliverToBoxAdapter(child: SizedBox(height: Screen.h * .01)),
-                SliverToBoxAdapter(child: CustomSearchTextField()),
+                SliverToBoxAdapter(
+                  child: CustomSearchTextField(controller: searchController),
+                ),
                 state is HomeLoadingState
                     ? SliverToBoxAdapter(child: HomeLoadingWidget())
                     : state is HomeFailureState
@@ -64,19 +80,28 @@ class _HomeViewWeState extends State<HomeViewWe> {
                       )
                     : state is HomeLoadedState
                     ? SliverToBoxAdapter(
-                        child: HomeBodyWidget(
-                          isProductLoading: state.isProductsLoading,
-                          categories: state.categories,
-                          products: state.products,
-                          categoryNotidier: categoryNotidier,
-                          categoryId: (id) {
-                            if (id == 0) {
-                              context.read<HomeCubit>().loadHomeData();
-                            } else {
-                              context.read<HomeCubit>().getProductsByCategory(
-                                id,
-                              );
-                            }
+                        child: ValueListenableBuilder<List<ProductModel>>(
+                          valueListenable: filteredProducts,
+                          builder: (context, products, _) {
+                            return HomeBodyWidget(
+                              isProductLoading: state.isProductsLoading,
+                              categories: state.categories,
+                              products:
+                                  products.isEmpty &&
+                                      searchController.text.isEmpty
+                                  ? state.products
+                                  : products,
+                              categoryNotidier: categoryNotidier,
+                              categoryId: (id) {
+                                if (id == 0) {
+                                  context.read<HomeCubit>().loadHomeData();
+                                } else {
+                                  context
+                                      .read<HomeCubit>()
+                                      .getProductsByCategory(id);
+                                }
+                              },
+                            );
                           },
                         ),
                       )

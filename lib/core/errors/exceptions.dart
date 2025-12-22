@@ -4,7 +4,7 @@ import 'package:restaurant_app_sonic/core/errors/error_model.dart';
 class ServerException implements Exception {
   final ErrorModel errorModel;
 
-  ServerException({required this.errorModel});
+  const ServerException({required this.errorModel});
 }
 
 void handleDioExceptions(DioException e) {

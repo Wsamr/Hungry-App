@@ -1,6 +1,7 @@
 import 'package:device_preview/device_preview.dart';
 import 'package:flutter/material.dart';
 import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
+import 'package:restaurant_app_sonic/core/constants/cache_keys.dart';
 import 'package:restaurant_app_sonic/core/constants/route_names.dart';
 import 'package:restaurant_app_sonic/core/service/service_locator.dart';
 import 'package:restaurant_app_sonic/core/utils/app_routes.dart';
@@ -11,6 +12,7 @@ void main() async {
   await setUpServiceLocator();
 
   // await CacheHelper().removeData(CacheKeys.token);
+  // await CacheHelper().removeData(CacheKeys.isVisited);
   // runApp(
   //   DevicePreview(
   //     builder: (context) => ReataurnantApp(), // Wrap your app

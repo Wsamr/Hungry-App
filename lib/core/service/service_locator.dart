@@ -8,6 +8,9 @@ import 'package:restaurant_app_sonic/features/auth/data/repo/auth_repo.dart';
 import 'package:restaurant_app_sonic/features/cart/cart_cubit/cart_cubit.dart';
 import 'package:restaurant_app_sonic/features/cart/data/repo/cart_repo.dart';
 import 'package:restaurant_app_sonic/features/cart/data/web/cart_web_service.dart';
+import 'package:restaurant_app_sonic/features/checkOut/check_out_cubit.dart';
+import 'package:restaurant_app_sonic/features/checkOut/data/check_out_web_service.dart';
+import 'package:restaurant_app_sonic/features/checkOut/data/repo/check_out_repo.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/data/repo/home_repo.dart';
 import 'package:restaurant_app_sonic/features/home/data/web/home_web_services.dart';
@@ -16,7 +19,6 @@ import 'package:restaurant_app_sonic/features/onboarding/view_model/onboarding_v
 import 'package:restaurant_app_sonic/features/orders_history/presentation/cubit/order_history_cubit.dart';
 import 'package:restaurant_app_sonic/features/orders_history/presentation/data/repo/order_history_repo.dart';
 import 'package:restaurant_app_sonic/features/orders_history/presentation/data/web/order_history_web_service.dart';
-import 'package:restaurant_app_sonic/features/product/logic/addtocart_cubit/product_selection_cubit.dart';
 import 'package:restaurant_app_sonic/features/product/logic/options_cubit/product_options_cubit.dart';
 import 'package:restaurant_app_sonic/features/product/data/repo/product_repo.dart';
 import 'package:restaurant_app_sonic/features/product/data/web/product_web_service.dart';
@@ -70,13 +72,20 @@ setUpServiceLocator() {
   sl.registerLazySingleton<ProductWebService>(
     () => ProductWebService(apiConsumer: sl<ApiConsumer>()),
   );
+  sl.registerLazySingleton<CheckOutWebService>(
+    () => CheckOutWebService(apiConsumer: sl<ApiConsumer>()),
+  );
+  sl.registerLazySingleton<CheckOutRepo>(
+    () => CheckOutRepoImple(checkOutWebService: sl<CheckOutWebService>()),
+  );
   sl.registerFactory(
     () => AuthCubit(authRepo: sl<AuthRepo>(), cacheHelper: sl<CacheHelper>()),
   );
   sl.registerFactory(() => HomeCubit(sl<HomeRepo>()));
 
   sl.registerFactory(() => ProfileCubit(profileRepo: sl<ProfileRepo>()));
-  sl.registerFactory(() => CartCubit(sl<CartRepo>()));
+  sl.registerFactory(() => CheckOutCubit(checkOutRepo: sl<CheckOutRepo>()));
+  sl.registerFactory(() => CartCubit(sl<CartRepo>(), sl<CheckOutRepo>()));
   sl.registerFactory(() => ProductOptionsCubit(sl<ProductRepo>()));
 
   // order history

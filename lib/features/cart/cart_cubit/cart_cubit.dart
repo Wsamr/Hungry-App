@@ -1,12 +1,16 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:restaurant_app_sonic/core/constants/error_messages.dart';
 import 'package:restaurant_app_sonic/features/cart/data/models/cart_item_model.dart';
 import 'package:restaurant_app_sonic/features/cart/data/repo/cart_repo.dart';
+import 'package:restaurant_app_sonic/features/checkOut/data/repo/check_out_repo.dart';
+import 'package:restaurant_app_sonic/features/product/data/models/add_to_cart_model.dart';
 part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
-  CartCubit(this.cartRepo) : super(CartState.initial());
+  CartCubit(this.cartRepo, this.checkOutRepo) : super(CartState.initial());
   final CartRepo cartRepo;
+  final CheckOutRepo checkOutRepo;
 
   void getCartData() async {
     emit(CartState.loading());

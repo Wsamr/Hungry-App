@@ -80,4 +80,35 @@ class HomeCubit extends Cubit<HomeState> {
       ),
     );
   }
+
+  Future<void> searchByName(String query) async {
+    if (query.isEmpty) {
+      emit(
+        HomeLoadedState(
+          categories: [
+            CategoryModel(id: 0, name: "All"),
+            ...?categories,
+          ],
+          products: products,
+        ),
+      );
+      return;
+    }
+
+    final filteredProducts = products
+        .where(
+          (product) => product.name.toLowerCase().contains(query.toLowerCase()),
+        )
+        .toList();
+
+    emit(
+      HomeLoadedState(
+        categories: [
+          CategoryModel(id: 0, name: "All"),
+          ...?categories,
+        ],
+        products: filteredProducts,
+      ),
+    );
+  }
 }

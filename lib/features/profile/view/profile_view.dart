@@ -3,12 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:restaurant_app_sonic/core/cached/cache_helper.dart';
+import 'package:restaurant_app_sonic/core/constants/app_icons.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
+import 'package:restaurant_app_sonic/core/constants/cache_keys.dart';
+import 'package:restaurant_app_sonic/core/constants/route_names.dart';
 import 'package:restaurant_app_sonic/core/functions/picker_image.dart';
 import 'package:restaurant_app_sonic/core/service/service_locator.dart';
 import 'package:restaurant_app_sonic/core/utils/validatior.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_buttom_sheet.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_widget.dart';
+import 'package:restaurant_app_sonic/core/widgets/custom_success_alert_dialog.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_text_form_feild_widget.dart';
 import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_model_ui.dart';
 import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_type.dart';
@@ -51,7 +55,7 @@ class _ProfileViewState extends State<ProfileView>
     } else if (imageUrl != null) {
       return NetworkImage(imageUrl);
     } else {
-      return AssetImage(AppImages.buragerImg);
+      return AssetImage(AppImages.personImage);
     }
   }
 
@@ -92,19 +96,51 @@ class _ProfileViewState extends State<ProfileView>
                 if (state is UpdateProfileSuccess) {
                   showDialog(
                     context: context,
-                    builder: (context) {
-                      return Container();
-                    },
+                    builder: (context) => CustomAlertDialog(
+                      title: "Sucess",
+                      imagePath: AppIcons.sucessIcon,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
+                }
+                if (state is UpdateProfileFailure) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomAlertDialog(
+                      title: state.errorMassege,
+                      imagePath: AppIcons.failureIcon,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
                   );
                 }
                 if (state is LogOutSuccess) {
-                  sl<CacheHelper>().clearData();
+                  sl<CacheHelper>().removeData(CacheKeys.token);
+                  Navigator.pushReplacementNamed(context, RouteNames.loginView);
+                }
+                if (state is LogOutFailure) {
+                  showDialog(
+                    context: context,
+                    builder: (context) => CustomAlertDialog(
+                      title: state.errorMassege,
+                      imagePath: AppIcons.failureIcon,
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    ),
+                  );
                 }
               },
               builder: (context, state) {
-                if (state is ProfileInfoLoading) {
+                if (state is ProfileInfoLoading ||
+                    state is UpdateProfileLoading ||
+                    state is LogOutLoading) {
                   return Center(child: CircularProgressIndicator());
                 }
+
                 return Form(
                   key: _formKey,
                   child: SingleChildScrollView(
@@ -189,19 +225,19 @@ class _ProfileViewState extends State<ProfileView>
                 title: "Edit Profile",
                 size: Size(screenWidth * .45, screenHeight * .1),
                 onPressed: () {
-                  // context.read<ProfileCubit>().updateProfile(
-                  //   UpdateProfileModel(
-                  //     name: name.text,
-                  //     email: email.text,
-                  //     address: address.text,
-                  //   ),
-                  // );
+                  context.read<ProfileCubit>().updateProfile(
+                    UpdateProfileModel(
+                      name: name.text,
+                      email: email.text,
+                      address: address.text,
+                    ),
+                  );
                 },
               ),
               CustomButtonWidget(
                 title: "Log out",
                 size: Size(screenWidth * .45, screenHeight * .1),
-                onPressed: () {},
+                onPressed: () => context.read<ProfileCubit>().logOut(),
               ),
             ],
           ),

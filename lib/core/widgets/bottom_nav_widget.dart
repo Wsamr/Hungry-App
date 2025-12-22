@@ -4,7 +4,6 @@ import 'package:restaurant_app_sonic/core/service/service_locator.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_tab_bar.dart';
 import 'package:restaurant_app_sonic/features/cart/cart_cubit/cart_cubit.dart';
-import 'package:restaurant_app_sonic/features/cart/data/repo/cart_repo.dart';
 import 'package:restaurant_app_sonic/features/cart/views/cart_view.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
@@ -30,12 +29,13 @@ class BottomNavWidget extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider(
-            create: (context) => sl<ProfileCubit>(),
-            // create: (context) => sl<ProfileCubit>(),
+            create: (context) => sl<ProfileCubit>()..getProfileInfo(),
           ),
-          BlocProvider(create: (context) => sl<OrderHistoryCubit>()),
+          BlocProvider(
+            create: (context) => sl<OrderHistoryCubit>()..getOrderHistory(),
+          ),
           BlocProvider(create: (context) => sl<HomeCubit>()..loadHomeData()),
-          BlocProvider(create: (context) => sl<CartCubit>()..getCartData()),
+          BlocProvider(create: (context) => sl<CartCubit>()),
         ],
         child: Scaffold(
           bottomNavigationBar: CustomTabBar(),

@@ -14,8 +14,8 @@ part 'auth_state.dart';
 class AuthCubit extends Cubit<AuthState> {
   AuthCubit({required this.authRepo, required this.cacheHelper})
     : super(AuthInitial());
-  AuthRepo authRepo;
-  CacheHelper cacheHelper;
+  final AuthRepo authRepo;
+  final CacheHelper cacheHelper;
   XFile? image;
   login(LoginRequestModel user) async {
     try {
@@ -46,9 +46,7 @@ class AuthCubit extends Cubit<AuthState> {
   register(RegisterRequestModel user) async {
     try {
       emit(ResgisterLoading());
-      print("ussssssssssssssssssssssssssssssssssss");
       final response = await authRepo.register(user);
-      print("ussssssssssssssssssssssssssssssssssss");
       // store token
       final String? token = response.data?.token;
       if (token != null && token.isNotEmpty) {
@@ -60,10 +58,8 @@ class AuthCubit extends Cubit<AuthState> {
       }
       emit(ResgisterSuccess(token: token!));
     } on ServerException catch (e) {
-      print("noooooooooooooooooooooooooooooooo ${e.errorModel.errorMassage}");
       emit(ResgisterFailure(errorMessage: e.errorModel.errorMassage));
     } catch (e) {
-      print("noooooooooooooooooooooooooooooooo${e.toString()}");
       emit(ResgisterFailure(errorMessage: e.toString()));
     }
   }

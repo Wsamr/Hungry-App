@@ -7,7 +7,7 @@ import 'package:restaurant_app_sonic/core/constants/api_endpoints.dart';
 import 'package:restaurant_app_sonic/core/errors/exceptions.dart';
 
 class DioConsumer extends ApiConsumer {
-  Dio dio;
+  final Dio dio;
   DioConsumer({required this.dio}) {
     dio.options.baseUrl = ApiEndpoints.baseUrl;
     //! interceptors

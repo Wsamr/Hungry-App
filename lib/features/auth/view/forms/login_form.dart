@@ -17,14 +17,14 @@ class LoginForm extends StatelessWidget {
     final size = MediaQuery.of(context).size;
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    ValueNotifier isHidenPassword = ValueNotifier(true);
+    ValueNotifier isHiddenPassword = ValueNotifier(true);
     final keyForm = GlobalKey<FormState>();
     return BlocListener<AuthCubit, AuthState>(
       listener: (context, state) {
         if (state is LoginLoading) {
           ScaffoldMessenger.of(
             context,
-          ).showSnackBar(SnackBar(content: Text("lodding")));
+          ).showSnackBar(SnackBar(content: Text("loading")));
         }
         if (state is LoginFailure) {
           ScaffoldMessenger.of(
@@ -54,7 +54,7 @@ class LoginForm extends StatelessWidget {
             ),
             SizedBox(height: size.height * .04),
             ValueListenableBuilder(
-              valueListenable: isHidenPassword,
+              valueListenable: isHiddenPassword,
               builder: (context, value, child) {
                 return CustomTextFormFelidWidget(
                   hintText: "Password ...",
@@ -63,7 +63,7 @@ class LoginForm extends StatelessWidget {
                   validator: Validatior.passwordValidation,
                   prefixIcon: GestureDetector(
                     onTap: () {
-                      isHidenPassword.value = !isHidenPassword.value;
+                      isHiddenPassword.value = !isHiddenPassword.value;
                     },
                     child: value
                         ? Icon(Icons.lock_outline_rounded)
@@ -92,8 +92,8 @@ class LoginForm extends StatelessWidget {
               onTap: () {
                 Navigator.pushNamed(context, RouteNames.resgisterView);
               },
-              hyperText: "SIGN Up",
-              mainText: "Don`t Have Account ? ",
+              hyperText: "SIGN UP",
+              mainText: "Don`t have an account ? ",
             ),
           ],
         ),

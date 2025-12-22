@@ -6,6 +6,8 @@ import 'package:restaurant_app_sonic/core/widgets/bottom_nav_widget.dart';
 import 'package:restaurant_app_sonic/features/auth/view/login_view.dart';
 import 'package:restaurant_app_sonic/features/auth/view/register_view.dart';
 import 'package:restaurant_app_sonic/features/auth/cubit/auth_cubit.dart';
+import 'package:restaurant_app_sonic/features/cart/cart_cubit/cart_cubit.dart';
+import 'package:restaurant_app_sonic/features/checkOut/check_out_cubit.dart';
 import 'package:restaurant_app_sonic/features/checkOut/views/check_out_view.dart';
 import 'package:restaurant_app_sonic/features/home/data/models/product_model.dart';
 import 'package:restaurant_app_sonic/features/home/view/home_view.dart';
@@ -52,7 +54,13 @@ class AppRoutes {
       case RouteNames.checkOutView:
         final String totalPrice = settings.arguments as String;
         return MaterialPageRoute(
-          builder: (context) => CheckOutView(totalPrice: totalPrice),
+          builder: (context) => MultiBlocProvider(
+            providers: [
+              BlocProvider.value(value: sl<CartCubit>()),
+              BlocProvider(create: (context) => sl<CheckOutCubit>()),
+            ],
+            child: CheckOutView(totalPrice: totalPrice),
+          ),
         );
       case RouteNames.orderDetaisView:
         OrderHistoryModel order = settings.arguments as OrderHistoryModel;

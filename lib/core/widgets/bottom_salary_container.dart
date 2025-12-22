@@ -4,8 +4,8 @@ import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_button_container.dart';
 
-class BottomSlaryContainer extends StatelessWidget {
-  const BottomSlaryContainer({
+class BottomSalaryContainer extends StatelessWidget {
+  const BottomSalaryContainer({
     super.key,
     this.buttonName,
     this.onTap,
