@@ -3,25 +3,38 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:restaurant_app_sonic/core/constants/app_icons.dart';
 import 'package:restaurant_app_sonic/core/constants/app_images.dart';
 import 'package:restaurant_app_sonic/core/constants/app_strings.dart';
+import 'package:restaurant_app_sonic/core/constants/route_names.dart';
 import 'package:restaurant_app_sonic/core/utils/res_text_size.dart';
 import 'package:restaurant_app_sonic/core/utils/screen.dart';
 import 'package:restaurant_app_sonic/core/widgets/custom_success_alert_dialog.dart';
 import 'package:restaurant_app_sonic/core/widgets/bottom_salary_container.dart';
 import 'package:restaurant_app_sonic/features/cart/cart_cubit/cart_cubit.dart';
-import 'package:restaurant_app_sonic/features/checkOut/check_out_cubit.dart';
+import 'package:restaurant_app_sonic/features/cart/data/models/cart_item_model.dart';
+import 'package:restaurant_app_sonic/features/checkOut/cubit/check_out_cubit.dart';
+import 'package:restaurant_app_sonic/features/checkOut/cubit/check_out_state.dart';
 import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_type.dart';
 import 'package:restaurant_app_sonic/features/checkOut/models/payment_method_model_ui.dart';
 import 'package:restaurant_app_sonic/features/checkOut/views/widgets/order_details_widget.dart';
 import 'package:restaurant_app_sonic/features/checkOut/views/widgets/payment_methods_list.dart';
 import 'package:svg_flutter/svg_flutter.dart';
 
-class CheckOutView extends StatelessWidget {
+class CheckOutView extends StatefulWidget {
   final String totalPrice;
   CheckOutView({super.key, required this.totalPrice});
 
+  @override
+  State<CheckOutView> createState() => _CheckOutViewState();
+}
+
+class _CheckOutViewState extends State<CheckOutView> {
   final ValueNotifier<PaymentMethodType> paymentWayNotifier = ValueNotifier(
     PaymentMethodType.cash,
   );
+  @override
+  void initState() {
+    context.read<CartCubit>().getCartData();
+    super.initState();
+  }
 
   final List<PaymentMethodModelUi> paymentMethods = [
     PaymentMethodModelUi(
@@ -50,11 +63,12 @@ class CheckOutView extends StatelessWidget {
               title: AppStrings.success,
               imagePath: AppIcons.sucessIcon,
               onPressed: () {
+                context.read<CartCubit>().clearCart();
                 Navigator.pop(context);
-                Navigator.pop(context);
-                context.read<CartCubit>().emit(
-                  CartState.initial(),
-                ); // clear cart
+                Navigator.pushReplacementNamed(
+                  context,
+                  RouteNames.bottomNavWidget,
+                );
               },
             ),
           );
@@ -70,7 +84,7 @@ class CheckOutView extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        final total = (double.parse(totalPrice) + 0.3 + 1.5).toString();
+        final total = (double.parse(widget.totalPrice) + 0.3 + 1.5).toString();
         final isLoading = state is CheckOutLoading;
 
         return Scaffold(
@@ -83,7 +97,7 @@ class CheckOutView extends StatelessWidget {
                 children: [
                   SizedBox(height: Screen.h * .02),
                   OrderDetailsWidget(
-                    order: totalPrice,
+                    order: widget.totalPrice,
                     taxes: "0.3",
                     deliveryFees: "1.5",
                     total: total,
@@ -104,16 +118,27 @@ class CheckOutView extends StatelessWidget {
               ),
             ),
           ),
-          bottomNavigationBar: BottomSalaryContainer(
-            salary: total,
-            isLoading: isLoading,
-            buttonName: AppStrings.checkOut,
-            onTap: isLoading
-                ? null
-                : () {
-                    final cartItems = context.read<CartCubit>().state.cartItems;
-                    context.read<CheckOutCubit>().saveOrder(cartItems);
-                  },
+          bottomNavigationBar: BlocBuilder<CartCubit, CartState>(
+            builder: (context, cartState) {
+              final isCartReady =
+                  cartState.status == CartStatus.success &&
+                  cartState.cartItems.isNotEmpty;
+
+              final isButtonDisabled = !isCartReady || isLoading;
+
+              return BottomSalaryContainer(
+                salary: total,
+                isLoading: isLoading,
+                buttonName: AppStrings.checkOut,
+                onTap: isButtonDisabled
+                    ? null
+                    : () {
+                        context.read<CheckOutCubit>().saveOrder(
+                          List.from(cartState.cartItems),
+                        );
+                      },
+              );
+            },
           ),
         );
       },

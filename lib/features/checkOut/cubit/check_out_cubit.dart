@@ -1,11 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:restaurant_app_sonic/features/cart/data/models/cart_item_model.dart';
+import 'package:restaurant_app_sonic/features/checkOut/cubit/check_out_state.dart';
 import 'package:restaurant_app_sonic/features/product/data/models/add_to_cart_model.dart';
 import 'package:restaurant_app_sonic/features/checkOut/data/repo/check_out_repo.dart';
 import 'package:restaurant_app_sonic/core/constants/error_messages.dart';
-
-part 'check_out_state.dart';
 
 class CheckOutCubit extends Cubit<CheckOutState> {
   final CheckOutRepo checkOutRepo;

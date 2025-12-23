@@ -1,4 +1,4 @@
-part of 'check_out_cubit.dart';
+import 'package:equatable/equatable.dart';
 
 abstract class CheckOutState extends Equatable {
   const CheckOutState();

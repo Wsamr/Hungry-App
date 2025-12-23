@@ -8,7 +8,7 @@ import 'package:restaurant_app_sonic/features/auth/data/repo/auth_repo.dart';
 import 'package:restaurant_app_sonic/features/cart/cart_cubit/cart_cubit.dart';
 import 'package:restaurant_app_sonic/features/cart/data/repo/cart_repo.dart';
 import 'package:restaurant_app_sonic/features/cart/data/web/cart_web_service.dart';
-import 'package:restaurant_app_sonic/features/checkOut/check_out_cubit.dart';
+import 'package:restaurant_app_sonic/features/checkOut/cubit/check_out_cubit.dart';
 import 'package:restaurant_app_sonic/features/checkOut/data/check_out_web_service.dart';
 import 'package:restaurant_app_sonic/features/checkOut/data/repo/check_out_repo.dart';
 import 'package:restaurant_app_sonic/features/home/cubit/home_cubit.dart';

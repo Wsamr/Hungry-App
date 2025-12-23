@@ -9,59 +9,52 @@ part 'cart_state.dart';
 
 class CartCubit extends Cubit<CartState> {
   CartCubit(this.cartRepo, this.checkOutRepo) : super(CartState.initial());
+
   final CartRepo cartRepo;
   final CheckOutRepo checkOutRepo;
 
   void getCartData() async {
     emit(CartState.loading());
     final cartData = await cartRepo.getCartData();
-    cartData.fold(
-      (error) {
-        emit(CartState.failure(error));
-      },
-      (cartResponseModel) {
-        emit(
-          CartState.success(
-            totalPrice: cartResponseModel.totalPrice,
-            cartItems: cartResponseModel.items,
-          ),
-        );
-      },
-    );
+    cartData.fold((error) => emit(CartState.failure(error)), (
+      cartResponseModel,
+    ) {
+      emit(
+        CartState.success(
+          totalPrice: cartResponseModel.totalPrice,
+          cartItems: cartResponseModel.items,
+        ),
+      );
+    });
   }
 
   void updateQuantity(int itemId, int newQuantity) {
     final index = state.cartItems.indexWhere((item) => item.itemId == itemId);
     if (index == -1) return;
+
     final updatedItems = List<CartItemModel>.from(state.cartItems);
-    final updatedItem = updatedItems[index].copyWith(quantity: newQuantity);
-    updatedItems[index] = updatedItem;
+    updatedItems[index] = updatedItems[index].copyWith(quantity: newQuantity);
+
     emit(state.copyWith(cartItems: updatedItems));
   }
 
   void removeCartItem(int cartItemId) async {
     emit(CartState.loading());
     final result = await cartRepo.removeCartItem(cartItemId);
+
     result.fold(
-      (error) {
-        CartState.failure(error);
-      },
-      (r) async {
-        final cartData = await cartRepo.getCartData();
-        cartData.fold(
-          (error) {
-            emit(CartState.failure(error));
-          },
-          (cartResponseModel) {
-            emit(
-              CartState.success(
-                totalPrice: cartResponseModel.totalPrice,
-                cartItems: cartResponseModel.items,
-              ),
-            );
-          },
-        );
-      },
+      (error) => emit(CartState.failure(error)),
+      (_) => getCartData(),
+    );
+  }
+
+  void clearCart() async {
+    emit(CartState.loading());
+
+    final itemsToRemove = List<CartItemModel>.from(state.cartItems);
+
+    await Future.wait(
+      itemsToRemove.map((item) => cartRepo.removeCartItem(item.itemId)),
     );
   }
 }
